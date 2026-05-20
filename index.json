@@ -1,0 +1,126 @@
+[
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "Seadex",
+      "id": "seadex",
+      "version": "0.0.7",
+      "type": "torrent",
+      "accuracy": "high",
+      "ratio": 0,
+      "media": "sub",
+      "languages": [
+        "US"
+      ],
+      "icon": "https://releases.moe/favicon.png",
+      "update": "https://raw.githubusercontent.com/afnanrudy/extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/extensions/main/seadex.js"
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "AnimeTosho",
+      "id": "animetosho",
+      "version": "0.1.3",
+      "type": "torrent",
+      "accuracy": "high",
+      "ratio": 0,
+      "media": "sub",
+      "languages": [
+        "US"
+      ],
+      "icon": "https://animetosho.org/inc/favicon.ico",
+      "update": "https://raw.githubusercontent.com/afnanrudy/extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/extensions/main/animetosho.js",
+      "options": {
+        "useTorrent": {
+          "type": "boolean",
+          "description": "Use .torrent files instead of magnet links, this can cause issues with some internet providers if they block some domains",
+          "default": false
+        }
+      }
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "AnimeTosho NZB",
+      "id": "animetosho-nzb",
+      "version": "0.0.9",
+      "type": "nzb",
+      "accuracy": "high",
+      "ratio": 0,
+      "media": "sub",
+      "languages": [
+        "US"
+      ],
+      "icon": "https://animetosho.org/inc/favicon.ico",
+      "update": "https://raw.githubusercontent.com/afnanrudy/extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/extensions/main/animetosho-nzb.js"
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "NyaaSi",
+      "id": "nyaasi",
+      "version": "0.0.7",
+      "type": "torrent",
+      "accuracy": "medium",
+      "ratio": 0,
+      "media": "sub",
+      "languages": [
+        "US"
+      ],
+      "icon": "https://nyaa.si/static/favicon.png",
+      "update": "https://raw.githubusercontent.com/afnanrudy/extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/extensions/main/nyaasi.js"
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "TorrentGalaxy",
+      "id": "torrentgalaxy",
+      "version": "0.0.1",
+      "type": "torrent",
+      "accuracy": "medium",
+      "ratio": 0,
+      "media": "both",
+      "languages": [
+        "US"
+      ],
+      "description": "Searches TorrentGalaxy listings and extracts magnet links",
+      "icon": "https://torrentgalaxy.to/images/tglogo.png",
+      "update": "https://raw.githubusercontent.com/afnanrudy/extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/extensions/main/torrentgalaxy.js",
+      "options": {
+        "useCorsProxy": {
+          "type": "boolean",
+          "description": "Fetch via a CORS proxy to avoid browser CORS errors",
+          "default": true
+        },
+        "proxyUrl": {
+          "type": "string",
+          "description": "CORS proxy URL prefix (must include trailing ? or = as needed)",
+          "default": "https://api.allorigins.win/raw?url="
+        }
+      }
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "NekoBT",
+      "id": "nekobt",
+      "version": "0.0.8",
+      "type": "torrent",
+      "accuracy": "high",
+      "ratio": 0,
+      "media": "sub",
+      "updatePeers": false,
+      "languages": [
+        "US"
+      ],
+      "url": "aHR0cHM6Ly9uZWtvYnQudG8vYXBpL3YxLw==",
+      "icon": "https://nekobt.to/cdn/pfp/null/64",
+      "update": "https://raw.githubusercontent.com/afnanrudy/extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/extensions/main/nekobt.js"
+    }
+]
