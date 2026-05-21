@@ -122,5 +122,35 @@
       "icon": "https://nekobt.to/cdn/pfp/null/64",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
       "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/nekobt.js"
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "PirateBay",
+      "id": "piratebay",
+      "version": "0.0.1",
+      "type": "torrent",
+      "accuracy": "medium",
+      "ratio": 0,
+      "media": "both",
+      "languages": [
+        "US"
+      ],
+      "description": "Searches The Pirate Bay via API and extracts magnet links",
+      "icon": "https://piratebay.org/favicon.ico",
+      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/piratebay.js",
+      "options": {
+        "useCorsProxy": {
+          "type": "boolean",
+          "description": "Fetch via a CORS proxy to avoid browser CORS errors",
+          "default": true
+        },
+        "proxyUrl": {
+          "type": "string",
+          "description": "CORS proxy URL prefix (must include trailing ? or = as needed)",
+          "default": "https://api.allorigins.win/raw?url="
+        }
+      }
     }
 ]
