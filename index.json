@@ -88,7 +88,7 @@
         "US"
       ],
       "description": "Searches TorrentGalaxy listings and extracts magnet links",
-      "icon": "https://torrentgalaxy.to/images/tglogo.png",
+      "icon": "https://favicon.yandex.net/favicon/torrentgalaxy.to",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
       "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/torrentgalaxy.js",
       "options": {
