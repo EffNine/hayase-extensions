@@ -8,13 +8,15 @@ export default new class PirateBay {
 
     const query = this.buildQuery(titles[0], episode)
     const queryEncoded = encodeURIComponent(query)
+    const useCorsProxy = options?.useCorsProxy ?? true
     let url = this.base + queryEncoded
-    if (options?.useCorsProxy) {
-      const proxy = options.proxyUrl || this.corsProxyDefault
+    if (useCorsProxy) {
+      const proxy = options?.proxyUrl || this.corsProxyDefault
       url = proxy + encodeURIComponent(this.base + queryEncoded)
     }
 
     const res = await fetch(url)
+    if (!res.ok) return []
     const data = await res.json()
 
     if (!Array.isArray(data)) return []
@@ -54,9 +56,10 @@ export default new class PirateBay {
 
   async test(options) {
     try {
+      const useCorsProxy = options?.useCorsProxy ?? true
       let url = this.base + 'test'
-      if (options?.useCorsProxy) {
-        const proxy = options.proxyUrl || this.corsProxyDefault
+      if (useCorsProxy) {
+        const proxy = options?.proxyUrl || this.corsProxyDefault
         url = proxy + encodeURIComponent(this.base + 'test')
       }
       const res = await fetch(url)
