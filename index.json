@@ -137,7 +137,7 @@
         "US"
       ],
       "description": "Searches The Pirate Bay via API and extracts magnet links",
-      "icon": "https://piratebay.org/favicon.ico",
+      "icon": "https://apibay.org/favicon.ico",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
       "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/piratebay.js",
       "options": {
