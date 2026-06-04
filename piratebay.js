@@ -74,4 +74,21 @@ export default new class PirateBay {
     }
     throw lastError || new Error('Failed to fetch data after multiple retries.');
   }
+
+  async _fetchWithCorsFallback(url) {
+    // Try direct fetch first
+    try {
+      return await this._fetchWithRetry(url);
+    } catch (error) {
+      // If direct fetch fails (likely CORS), try with CORS proxy
+      console.warn('Direct fetch failed, attempting CORS proxy fallback...');
+      const proxyUrl = this.corsProxyDefault + encodeURIComponent(url);
+      try {
+        return await this._fetchWithRetry(proxyUrl);
+      } catch (proxyError) {
+        console.error('Both direct and proxy fetch failed:', proxyError);
+        throw proxyError;
+      }
+    }
+  }
 }
