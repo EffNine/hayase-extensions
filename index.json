@@ -188,7 +188,7 @@
       "languages": ["ALL"],
       "icon": "https://animetosho.org/inc/favicon.ico",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/multi/animetosho.js",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/animetosho.js",
       "options": {
         "useTorrent": {
           "type": "boolean",
@@ -210,7 +210,7 @@
       "languages": ["ALL"],
       "icon": "https://nekobt.to/cdn/pfp/null/64",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/multi/nekobt.js",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/nekobt-multi.js",
       "options": {
         "language": {
           "type": "select",
@@ -235,7 +235,7 @@
       "languages": ["ALL"],
       "icon": "https://animetosho.xyz/static/favicon.ico",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/multi/animetoshonew.js",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/animetoshonew.js",
       "options": {
         "useTorrent": {
           "type": "boolean",
@@ -257,7 +257,7 @@
       "languages": ["US"],
       "icon": "https://animetosho.xyz/static/favicon.ico",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/nzb/animetosho-nzb-new.js"
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/animetosho-nzb.js"
     },
     {
       "manifestVersion": 2,
@@ -272,8 +272,8 @@
       "languages": ["US"],
       "icon": "https://amenzb.moe/static/posters/ame.png",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/nzb/amenzb.js",
-      "reason": "Service unavailable"
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/amenzb-nzb.js",
+      "reason": "Service unavailable",
       "options": {
         "ameapi": {
           "type": "string",
@@ -295,7 +295,7 @@
       "languages": ["US"],
       "icon": "https://sukebei.nyaa.si/static/favicon.png",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/hentai/sukebei.js",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/sukebei-hentai.js",
       "url": "aHR0cHM6Ly9zdWtlYmVpLm55YWEuc2kv"
     }
 ]
