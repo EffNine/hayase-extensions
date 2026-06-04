@@ -8,12 +8,8 @@ export default new class PirateBay {
 
     const query = this.buildQuery(titles[0], episode)
     const queryEncoded = encodeURIComponent(query)
-    const useCorsProxy = options?.useCorsProxy ?? true
+    // Removed proxy logic: use direct base URL
     let url = this.base + queryEncoded
-    if (useCorsProxy) {
-      const proxy = options?.proxyUrl || this.corsProxyDefault
-      url = proxy + encodeURIComponent(this.base + queryEncoded)
-    }
 
     try {
       return await this._fetchWithRetry(url);
@@ -22,6 +18,7 @@ export default new class PirateBay {
       const errorMessage = error instanceof Error ? error.message : String(error);
       throw new Error(`Could not connect to The Pirate Bay API or fetch data due to network/CORS restrictions. Details: ${errorMessage}`);
     }
+  }
   }
   }
 
