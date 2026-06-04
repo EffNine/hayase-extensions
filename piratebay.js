@@ -16,14 +16,13 @@ export default new class PirateBay {
     }
 
     try {
-      const res = await fetch(url)
-      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status} ${res.statusText}`)
-      return (await res.json())
+      return await this._fetchWithRetry(url);
     } catch (error) {
       console.error('Error fetching data from Pirate Bay API:', error);
       const errorMessage = error instanceof Error ? error.message : String(error);
       throw new Error(`Could not connect to The Pirate Bay API or fetch data due to network/CORS restrictions. Details: ${errorMessage}`);
     }
+  }
   }
 
   batch = this.single
@@ -56,18 +55,28 @@ export default new class PirateBay {
     })
   }
 
-  async test(options) {
-    try {
-      const useCorsProxy = options?.useCorsProxy ?? true
-      let url = this.base + 'test'
-      if (useCorsProxy) {
-        const proxy = options?.proxyUrl || this.corsProxyDefault
-        url = proxy + encodeURIComponent(this.base + 'test')
+  async _fetchWithRetry(url) {
+    const maxRetries = 3;
+    let lastError = null;
+
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        console.log(`Attempting to fetch data from Pirate Bay API (Attempt ${attempt + 1}/${maxRetries})...`);
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status} ${res.statusText}`);
+
+        // Attempt to parse JSON, which might fail if the API returns non-JSON on error
+        return await res.json(); 
+      } catch (error) {
+        lastError = error;
+        console.warn(`Fetch attempt failed: ${error.message}. Retrying in ${Math.pow(2, attempt)} seconds...`);
+
+        if (attempt < maxRetries - 1) {
+          // Exponential backoff: wait 2^attempt seconds
+          await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+        }
       }
-      const res = await fetch(url)
-      return res.ok
-    } catch (error) {
-      throw new Error('Could not connect to The Pirate Bay API')
     }
+    throw lastError || new Error('Failed to fetch data after multiple retries.');
   }
 }
