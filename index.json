@@ -18,10 +18,10 @@
     },
     {
       "manifestVersion": 2,
-      "deprecated": false,
+      "deprecated": true,
       "name": "AnimeTosho",
       "id": "animetosho",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "type": "torrent",
       "accuracy": "high",
       "ratio": 0,
@@ -32,6 +32,7 @@
       "icon": "https://animetosho.org/inc/favicon.ico",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
       "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/animetosho.js",
+      "reason": "Use AnimeTosho (New) instead",
       "options": {
         "useTorrent": {
           "type": "boolean",
@@ -177,10 +178,10 @@
     },
     {
       "manifestVersion": 2,
-      "deprecated": false,
+      "deprecated": true,
       "name": "AnimeTosho MultiSub (Old)",
       "id": "animetosho-multi",
-      "version": "0.0.9",
+      "version": "0.0.10",
       "type": "torrent",
       "accuracy": "high",
       "ratio": 0,
@@ -189,6 +190,7 @@
       "icon": "https://animetosho.org/inc/favicon.ico",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
       "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/animetosho.js",
+      "reason": "Use AnimeTosho MultiSub (New) instead",
       "options": {
         "useTorrent": {
           "type": "boolean",
