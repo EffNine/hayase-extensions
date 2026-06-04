@@ -15,13 +15,15 @@ export default new class PirateBay {
       url = proxy + encodeURIComponent(this.base + queryEncoded)
     }
 
-    const res = await fetch(url)
-    if (!res.ok) return []
-    const data = await res.json()
-
-    if (!Array.isArray(data)) return []
-
-    return this.map(data)
+    try {
+      const res = await fetch(url)
+      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status} ${res.statusText}`)
+      return (await res.json())
+    } catch (error) {
+      console.error('Error fetching data from Pirate Bay API:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      throw new Error(`Could not connect to The Pirate Bay API or fetch data due to network/CORS restrictions. Details: ${errorMessage}`);
+    }
   }
 
   batch = this.single
