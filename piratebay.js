@@ -91,4 +91,14 @@ export default new class PirateBay {
       }
     }
   }
+
+  async test(options) {
+    try {
+      const url = this.base + 'test';
+      const res = await this._fetchWithCorsFallback(url);
+      return res !== null && res !== undefined;
+    } catch (error) {
+      throw new Error('Could not connect to The Pirate Bay API');
+    }
+  }
 }
