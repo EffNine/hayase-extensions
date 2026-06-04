@@ -19,8 +19,6 @@ export default new class PirateBay {
       throw new Error(`Could not connect to The Pirate Bay API or fetch data due to network/CORS restrictions. Details: ${errorMessage}`);
     }
   }
-  }
-  }
 
   batch = this.single
   movie = this.single
