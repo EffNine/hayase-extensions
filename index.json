@@ -152,5 +152,149 @@
           "default": "https://api.allorigins.win/raw?url="
         }
       }
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "AnimeTosho (New)",
+      "id": "animetosho-new",
+      "version": "0.0.1",
+      "type": "torrent",
+      "accuracy": "medium",
+      "ratio": 0,
+      "media": "sub",
+      "languages": ["US"],
+      "icon": "https://animetosho.xyz/static/favicon.ico",
+      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/animetoshonew.js",
+      "options": {
+        "useTorrent": {
+          "type": "boolean",
+          "description": "Use .torrent files instead of magnet links, this can cause issues with some internet providers if they block some domains",
+          "default": false
+        }
+      }
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "AnimeTosho MultiSub (Old)",
+      "id": "animetosho-multi",
+      "version": "0.0.9",
+      "type": "torrent",
+      "accuracy": "high",
+      "ratio": 0,
+      "media": "sub",
+      "languages": ["ALL"],
+      "icon": "https://animetosho.org/inc/favicon.ico",
+      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/multi/animetosho.js",
+      "options": {
+        "useTorrent": {
+          "type": "boolean",
+          "description": "Use .torrent files instead of magnet links, this can cause issues with some internet providers if they block some domains",
+          "default": false
+        }
+      }
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "NekoBT MultiSub",
+      "id": "nekobt-multi",
+      "version": "0.1.0",
+      "type": "torrent",
+      "accuracy": "high",
+      "ratio": 0,
+      "media": "sub",
+      "languages": ["ALL"],
+      "icon": "https://nekobt.to/cdn/pfp/null/64",
+      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/multi/nekobt.js",
+      "options": {
+        "language": {
+          "type": "select",
+          "description": "Preferred language for results, if the source supports it",
+          "default": "en",
+          "values": [
+            "ja", "en", "enm", "af", "sq", "ar", "eu", "bn", "bs", "bg", "my", "yue", "ca", "zh-hans", "zh-hant", "hr", "cs", "da", "nl", "eo", "et", "fi", "fil", "fr-fr", "fr-ca", "gd", "gl", "ka", "de", "el", "gu", "he", "hi", "hu", "is", "id", "ga", "it", "jv", "kn", "kk", "ko", "la", "lv", "lt", "mk", "ms", "ml", "mt", "zh", "mr", "mn", "ne", "no", "fa", "pl", "pt-pt", "pt-br", "pa", "ro", "ru", "sr", "si", "sk", "sl", "es-es", "es-419", "sv", "ta", "te", "th", "tr", "uk", "vi", "zxx"
+          ]
+        }
+      }
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "AnimeTosho MultiSub (New)",
+      "id": "animetosho-multi-new",
+      "version": "0.0.1",
+      "type": "torrent",
+      "accuracy": "medium",
+      "ratio": 0,
+      "media": "sub",
+      "languages": ["ALL"],
+      "icon": "https://animetosho.xyz/static/favicon.ico",
+      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/multi/animetoshonew.js",
+      "options": {
+        "useTorrent": {
+          "type": "boolean",
+          "description": "Use .torrent files instead of magnet links, this can cause issues with some internet providers if they block some domains",
+          "default": false
+        }
+      }
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "AnimeTosho NZB (New)",
+      "id": "animetosho-nzb-new",
+      "version": "0.0.4",
+      "type": "nzb",
+      "accuracy": "high",
+      "ratio": 0,
+      "media": "sub",
+      "languages": ["US"],
+      "icon": "https://animetosho.xyz/static/favicon.ico",
+      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/nzb/animetosho-nzb-new.js"
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "ameNZB",
+      "id": "amenzb",
+      "version": "0.0.3",
+      "type": "nzb",
+      "accuracy": "high",
+      "ratio": 0,
+      "media": "sub",
+      "languages": ["US"],
+      "icon": "https://amenzb.moe/static/posters/ame.png",
+      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/nzb/amenzb.js",
+      "options": {
+        "ameapi": {
+          "type": "string",
+          "description": "AmeNZB API Key, you can get one for free by registering on their website",
+          "default": ""
+        }
+      }
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "Nyaa Sukebei",
+      "id": "sukebei-nyaa",
+      "version": "0.0.2",
+      "type": "torrent",
+      "accuracy": "low",
+      "ratio": 0,
+      "media": "sub",
+      "languages": ["US"],
+      "icon": "https://sukebei.nyaa.si/static/favicon.png",
+      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/hentai/sukebei.js",
+      "url": "aHR0cHM6Ly9zdWtlYmVpLm55YWEuc2kv"
     }
 ]
