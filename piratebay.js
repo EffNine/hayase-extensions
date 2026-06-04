@@ -12,7 +12,7 @@ export default new class PirateBay {
     let url = this.base + queryEncoded
 
     try {
-      return await this._fetchWithRetry(url);
+      return await this._fetchWithCorsFallback(url);
     } catch (error) {
       console.error('Error fetching data from Pirate Bay API:', error);
       const errorMessage = error instanceof Error ? error.message : String(error);
