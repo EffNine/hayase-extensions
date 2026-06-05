@@ -58,7 +58,6 @@ export default new class SubsPlease {
   }
 
   async single(query, options) {
-    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
@@ -69,7 +68,6 @@ export default new class SubsPlease {
   }
 
   async batch(query, options) {
-    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
@@ -80,7 +78,6 @@ export default new class SubsPlease {
   }
 
   async movie(query, options) {
-    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";

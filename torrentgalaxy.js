@@ -8,8 +8,7 @@ export default new class TorrentGalaxy {
     return encodeURIComponent(q)
   }
 
-  async single({ titles, episode }, options) {
-    if (!navigator.onLine) return []
+  async single({ titles, episode, fetch: fetchFn }, options) {
     if (!titles?.length) return []
 
     const q = this.buildQuery(titles[0], episode)
@@ -19,7 +18,7 @@ export default new class TorrentGalaxy {
       url = proxy + encodeURIComponent(this.base + q)
     }
 
-    const res = await fetch(url)
+    const res = await fetchFn(url)
     const text = await res.text()
 
     // Extract magnet links and titles from the HTML

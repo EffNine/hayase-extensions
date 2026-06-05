@@ -99,7 +99,6 @@ export default new class AniRena {
   }
 
   async single(query, options) {
-    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const items = await this._getRSS(query.fetch);
@@ -109,7 +108,6 @@ export default new class AniRena {
   }
 
   async batch(query, options) {
-    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const items = await this._getRSS(query.fetch);
@@ -119,7 +117,6 @@ export default new class AniRena {
   }
 
   async movie(query, options) {
-    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const items = await this._getRSS(query.fetch);
