@@ -1,6 +1,7 @@
 export default new class AniRena {
-  base = "https://www.anirena.com/rss.php";
+  base = "https://www.anirena.com/rss";
   corsProxyDefault = "https://api.allorigins.win/raw?url=";
+  corsProxyFallback = "https://corsproxy.org/?";
 
   async _fetchWithCors(url, options) {
     if (options?.useCorsProxy) {
