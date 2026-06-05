@@ -22,6 +22,8 @@ https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.jso
 | [TorrentGalaxy](./torrentgalaxy.js) | torrent | medium | both | Active |
 | [Sukebei](./sukebei-hentai.js) | torrent | — | — | Active |
 | [PirateBay](./piratebay.js) | torrent | — | — | Active |
+| [AniRena](./anirena.js) | torrent | medium | subtitles | Active |
+| [SubsPlease](./subsplease.js) | torrent | high | subtitles | Active |
 | [AnimeTosho NZB](./animetosho-nzb.js) | nzb | high | subtitles | Active |
 | [Nekobt](./nekobt.js) | torrent | — | — | Active |
 | [AnimeTosho](./animetosho.js) | torrent | high | subtitles | Deprecated |
