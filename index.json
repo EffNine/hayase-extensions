@@ -1,7 +1,7 @@
 [
     {
       "manifestVersion": 2,
-      "deprecated": false,
+      "deprecated": true,
       "name": "Seadex",
       "id": "seadex",
       "version": "0.0.7",
@@ -14,7 +14,8 @@
       ],
       "icon": "https://releases.moe/favicon.png",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/seadex.js"
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/seadex.js",
+      "reason": "Service unavailable"
     },
     {
       "manifestVersion": 2,
