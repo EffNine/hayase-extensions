@@ -264,7 +264,7 @@
     },
     {
       "manifestVersion": 2,
-      "deprecated": true,
+      "deprecated": false,
       "name": "ameNZB",
       "id": "amenzb",
       "version": "0.0.4",
@@ -273,10 +273,10 @@
       "ratio": 0,
       "media": "sub",
       "languages": ["US"],
+      "url": "aHR0cHM6Ly9hbWVuemIubW9l",
       "icon": "https://amenzb.moe/static/posters/ame.png",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
       "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/amenzb-nzb.js",
-      "reason": "Service unavailable",
       "options": {
         "ameapi": {
           "type": "string",
