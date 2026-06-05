@@ -287,17 +287,47 @@
     {
       "manifestVersion": 2,
       "deprecated": false,
-      "name": "Nyaa Sukebei",
-      "id": "sukebei-nyaa",
-      "version": "0.0.2",
+      "name": "SubsPlease",
+      "id": "subsplease",
+      "version": "0.0.1",
       "type": "torrent",
-      "accuracy": "low",
+      "accuracy": "high",
       "ratio": 0,
       "media": "sub",
       "languages": ["US"],
-      "icon": "https://sukebei.nyaa.si/static/favicon.png",
+      "description": "Popular anime subs tracker with RSS feeds",
+      "icon": "https://subsplease.org/favicon.ico",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/sukebei-hentai.js",
-      "url": "aHR0cHM6Ly9zdWtlYmVpLm55YWEuc2kv"
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/subsplease.js"
+    },
+    {
+      "manifestVersion": 2,
+      "deprecated": false,
+      "name": "AniRena",
+      "id": "anirena",
+      "version": "0.0.1",
+      "type": "torrent",
+      "accuracy": "medium",
+      "ratio": 0,
+      "media": "sub",
+      "languages": [
+        "US"
+      ],
+      "description": "Long-standing anime torrent tracker",
+      "icon": "https://www.anirena.com/favicon.ico",
+      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/anirena.js",
+      "options": {
+        "useCorsProxy": {
+          "type": "boolean",
+          "description": "Fetch via a CORS proxy to avoid browser CORS errors",
+          "default": true
+        },
+        "proxyUrl": {
+          "type": "string",
+          "description": "CORS proxy URL prefix (must include trailing ? or = as needed)",
+          "default": "https://api.allorigins.win/raw?url="
+        }
+      }
     }
 ]
