@@ -4,9 +4,17 @@ export default new class AniRena {
   corsProxyFallback = "https://corsproxy.org/?";
 
   async _fetchWithCors(url, options) {
-    if (options?.useCorsProxy) {
-      const proxy = options.proxyUrl || this.corsProxyDefault;
-      return fetch(proxy + encodeURIComponent(url));
+    // Always use CORS proxy by default since AniRena doesn't send CORS headers
+    const proxy = options?.proxyUrl || this.corsProxyDefault || this.corsProxyFallback;
+    if (proxy) {
+      try {
+        return fetch(proxy + encodeURIComponent(url));
+      } catch {
+        // Fallback to second proxy if first fails
+        if (proxy === this.corsProxyDefault && this.corsProxyFallback) {
+          return fetch(this.corsProxyFallback + encodeURIComponent(url));
+        }
+      }
     }
     return fetch(url);
   }
