@@ -1,22 +1,18 @@
 export default new class AniRena {
   base = "https://www.anirena.com/rss";
   corsProxyDefault = "https://api.allorigins.win/raw?url=";
-  corsProxyFallback = "https://corsproxy.org/?";
 
   async _fetchWithCors(url, options) {
-    // Always use CORS proxy by default since AniRena doesn't send CORS headers
-    const proxy = options?.proxyUrl || this.corsProxyDefault || this.corsProxyFallback;
-    if (proxy) {
-      try {
-        return fetch(proxy + encodeURIComponent(url));
-      } catch {
-        // Fallback to second proxy if first fails
-        if (proxy === this.corsProxyDefault && this.corsProxyFallback) {
-          return fetch(this.corsProxyFallback + encodeURIComponent(url));
-        }
-      }
+    // Use passed fetch (from Hayase app) by default - it bypasses CORS
+    if (options?.fetch) {
+      const res = await options.fetch(url);
+      const text = await res.text();
+      return this._parseRSS(text);
     }
-    return fetch(url);
+    // Fallback: direct fetch (for browser extension context)
+    const res = await fetch(url);
+    const text = await res.text();
+    return this._parseRSS(text);
   }
 
   _parseRSS(xml) {

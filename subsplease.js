@@ -2,31 +2,16 @@ export default new class SubsPlease {
   url = "https://subsplease.org";
   rssUrl = "https://subsplease.org/rss";
   corsProxyDefault = "https://api.allorigins.win/raw?url=";
-  corsProxyFallback = "https://corsproxy.org/?";
 
   async _fetch(fetchFn, search) {
     const url = `${this.rssUrl}?${search}`;
-    // Try CORS proxy first since SubsPlease doesn't send CORS headers
-    const proxy = this.corsProxyDefault || this.corsProxyFallback;
-    if (proxy) {
-      try {
-        const res = await fetch(proxy + encodeURIComponent(url));
-        if (res.ok) {
-          const text = await res.text();
-          return this._parseRSS(text);
-        }
-      } catch {
-        // Fallback to second proxy if first fails
-        if (proxy === this.corsProxyDefault && this.corsProxyFallback) {
-          const res = await fetch(this.corsProxyFallback + encodeURIComponent(url));
-          if (res.ok) {
-            const text = await res.text();
-            return this._parseRSS(text);
-          }
-        }
-      }
+    // Use passed fetch (from Hayase app) by default
+    if (fetchFn) {
+      const res = await fetchFn(url);
+      const text = await res.text();
+      return this._parseRSS(text);
     }
-    // Last resort: direct fetch
+    // Fallback: direct fetch (for browser extension context)
     const res = await fetch(url);
     const text = await res.text();
     return this._parseRSS(text);
