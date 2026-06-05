@@ -297,6 +297,7 @@
       "media": "sub",
       "languages": ["US"],
       "description": "Popular anime subs tracker with RSS feeds",
+      "url": "aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZw==",
       "icon": "https://subsplease.org/favicon.ico",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
       "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/subsplease.js"
@@ -315,6 +316,7 @@
         "US"
       ],
       "description": "Long-standing anime torrent tracker",
+      "url": "aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20=",
       "icon": "https://www.anirena.com/favicon.ico",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
       "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/anirena.js"

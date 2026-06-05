@@ -16,9 +16,8 @@ export default new class AmeNZB {
     const items = this._parseItems(string), nameWithoutExt = name.replace(/\.[^.]+$/, "");
     return (items.find(item => item.nzbname?.includes(name)) || items.find(item => item.title?.includes(name)) || items.find(item => item.nzbname?.includes(nameWithoutExt)) || items.find(item => item.title?.includes(nameWithoutExt)))?.link?.replaceAll("&amp;", "&");
   }
-  async batch({hash: hash, name: name, files: files}, options) {
+  async batch({hash: hash, name: name, files: files, fetch: fetchFn}, options) {
     if (!navigator.onLine || !options?.ameapi) return;
-    const fetchFn = options?.fetch || globalThis.fetch;
     const search = new URLSearchParams({
       apikey: options.ameapi,
       t: "search",
@@ -34,9 +33,8 @@ export default new class AmeNZB {
     }), stringRes = await fetchFn(this.url + stringSearch.toString());
     return stringRes.ok ? this._findByName(await stringRes.text(), name) : void 0;
   }
-  async single({hash: hash, file: file}, options) {
+  async single({hash: hash, file: file, fetch: fetchFn}, options) {
     if (!navigator.onLine || !options?.ameapi) return;
-    const fetchFn = options?.fetch || globalThis.fetch;
     const search = new URLSearchParams({
       apikey: options.ameapi,
       t: "search",
