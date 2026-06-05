@@ -2,17 +2,13 @@ export default new class AniRena {
   base = "https://www.anirena.com/rss";
   corsProxyDefault = "https://api.allorigins.win/raw?url=";
 
-  async _fetchWithCors(url, options) {
-    // Use passed fetch (from Hayase app) by default - it bypasses CORS
-    if (options?.fetch) {
-      const res = await options.fetch(url);
-      const text = await res.text();
-      return this._parseRSS(text);
+  async _fetchWithCors(url, fetchFn) {
+    // Use passed fetch (from Hayase app) to bypass CORS
+    if (fetchFn) {
+      return fetchFn(url);
     }
     // Fallback: direct fetch (for browser extension context)
-    const res = await fetch(url);
-    const text = await res.text();
-    return this._parseRSS(text);
+    return fetch(url);
   }
 
   _parseRSS(xml) {
@@ -102,31 +98,31 @@ export default new class AniRena {
     return this._parseRSS(text);
   }
 
-  async single({ titles, episode, resolution }, options) {
+  async single(query, options) {
     if (!navigator.onLine) return [];
-    if (!titles?.length) return [];
+    if (!query.titles?.length) return [];
 
-    const items = await this._getRSS(options);
+    const items = await this._getRSS(query.fetch);
     if (!items?.length) return [];
 
-    return this.map(items, titles, episode, resolution);
+    return this.map(items, query.titles, query.episode, query.resolution);
   }
 
-  async batch({ titles, episode, resolution }, options) {
+  async batch(query, options) {
     if (!navigator.onLine) return [];
-    if (!titles?.length) return [];
+    if (!query.titles?.length) return [];
 
-    const items = await this._getRSS(options);
+    const items = await this._getRSS(query.fetch);
     if (!items?.length) return [];
 
-    return this.map(items, titles, episode, resolution, true);
+    return this.map(items, query.titles, query.episode, query.resolution, true);
   }
 
-  async movie({ titles, resolution }, options) {
+  async movie(query, options) {
     if (!navigator.onLine) return [];
-    if (!titles?.length) return [];
+    if (!query.titles?.length) return [];
 
-    const items = await this._getRSS(options);
+    const items = await this._getRSS(query.fetch);
     if (!items?.length) return [];
 
     return this.map(items, titles, null, resolution);

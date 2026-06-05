@@ -57,37 +57,37 @@ export default new class SubsPlease {
     return { ep, resolution, animeTitle };
   }
 
-  async single({ anilistId, titles, episode, resolution }, options) {
+  async single(query, options) {
     if (!navigator.onLine) return [];
-    if (!titles?.length) return [];
+    if (!query.titles?.length) return [];
 
-    const resParam = resolution === "1080" ? "1080" : resolution === "720" ? "720" : "sd";
-    const items = await this._fetch(options?.fetch, `r=${resParam}`);
+    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
+    const items = await this._fetch(query.fetch, `r=${resParam}`);
     if (!items?.length) return [];
 
-    return this.map(items, titles, episode, resolution);
+    return this.map(items, query.titles, query.episode, query.resolution);
   }
 
-  async batch({ anilistId, titles, episode, resolution }, options) {
+  async batch(query, options) {
     if (!navigator.onLine) return [];
-    if (!titles?.length) return [];
+    if (!query.titles?.length) return [];
 
-    const resParam = resolution === "1080" ? "1080" : resolution === "720" ? "720" : "sd";
-    const items = await this._fetch(options?.fetch, `r=${resParam}`);
+    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
+    const items = await this._fetch(query.fetch, `r=${resParam}`);
     if (!items?.length) return [];
 
-    return this.map(items, titles, episode, resolution, true);
+    return this.map(items, query.titles, query.episode, query.resolution, true);
   }
 
-  async movie({ anilistId, titles, resolution }, options) {
+  async movie(query, options) {
     if (!navigator.onLine) return [];
-    if (!titles?.length) return [];
+    if (!query.titles?.length) return [];
 
-    const resParam = resolution === "1080" ? "1080" : resolution === "720" ? "720" : "sd";
-    const items = await this._fetch(options?.fetch, `r=${resParam}`);
+    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
+    const items = await this._fetch(query.fetch, `r=${resParam}`);
     if (!items?.length) return [];
 
-    return this.map(items, titles, null, resolution);
+    return this.map(items, query.titles, null, query.resolution);
   }
 
   map(items, titles, episode, resolution, isBatch = false) {
