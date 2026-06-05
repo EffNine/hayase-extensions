@@ -317,18 +317,6 @@
       "description": "Long-standing anime torrent tracker",
       "icon": "https://www.anirena.com/favicon.ico",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/anirena.js",
-      "options": {
-        "useCorsProxy": {
-          "type": "boolean",
-          "description": "Fetch via a CORS proxy to avoid browser CORS errors",
-          "default": true
-        },
-        "proxyUrl": {
-          "type": "string",
-          "description": "CORS proxy URL prefix (must include trailing ? or = as needed)",
-          "default": "https://api.allorigins.win/raw?url="
-        }
-      }
+      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/anirena.js"
     }
 ]

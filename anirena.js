@@ -92,8 +92,8 @@ export default new class AniRena {
     return { ep, resolution, group, animeTitle };
   }
 
-  async _getRSS(options) {
-    const res = await this._fetchWithCors(this.base, options);
+  async _getRSS(fetchFn) {
+    const res = await this._fetchWithCors(this.base, fetchFn);
     const text = await res.text();
     return this._parseRSS(text);
   }
@@ -125,7 +125,7 @@ export default new class AniRena {
     const items = await this._getRSS(query.fetch);
     if (!items?.length) return [];
 
-    return this.map(items, titles, null, resolution);
+    return this.map(items, query.titles, null, query.resolution);
   }
 
   map(items, titles, episode, resolution, isBatch = false) {
@@ -168,7 +168,7 @@ export default new class AniRena {
           date: item.pubDate ? new Date(item.pubDate) : null,
           accuracy: "medium",
           type: isBatch ? "batch" : undefined,
-          group: parsed.group
+
         };
       })
       .sort((a, b) => {
@@ -178,11 +178,11 @@ export default new class AniRena {
       });
   }
 
-  async test(options) {
+  async test() {
     try {
-      const res = await this._fetchWithCors(this.base, options);
+      const res = await fetch(this.base);
       if (!res.ok) throw new Error(`Failed to load data from ${this.base}! Is the site down?`);
-      return !0;
+      return true;
     } catch (error) {
       throw new Error(`Could not reach ${this.base}! Does the site work in your region?`);
     }
