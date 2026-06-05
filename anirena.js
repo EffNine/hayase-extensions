@@ -184,7 +184,7 @@ export default new class AniRena {
       if (!res.ok) throw new Error(`Failed to load data from ${this.base}! Is the site down?`);
       return true;
     } catch (error) {
-      throw new Error(`Could not reach ${this.base}! Does the site work in your region?`);
+      throw new Error(`Could not reach ${this.base}! Does the site work in your region? Try enabling DoH or using a VPN.`);
     }
   }
 };

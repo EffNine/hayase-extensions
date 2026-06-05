@@ -135,7 +135,7 @@ export default new class SubsPlease {
       if (!res.ok) throw new Error(`Failed to load data from ${this.rssUrl}! Is the site down?`);
       return true;
     } catch (error) {
-      throw new Error(`Could not reach ${this.url}! Does the site work in your region?`);
+      throw new Error(`Could not reach ${this.url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
     }
   }
 };

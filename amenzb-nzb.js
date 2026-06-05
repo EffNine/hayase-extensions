@@ -17,12 +17,13 @@ export default new class AmeNZB {
     return (items.find(item => item.nzbname?.includes(name)) || items.find(item => item.title?.includes(name)) || items.find(item => item.nzbname?.includes(nameWithoutExt)) || items.find(item => item.title?.includes(nameWithoutExt)))?.link?.replaceAll("&amp;", "&");
   }
   async batch({hash: hash, name: name, files: files}, options) {
-    if (!navigator.onLine || !options.ameapi) return;
+    if (!navigator.onLine || !options?.ameapi) return;
+    const fetchFn = options?.fetch || globalThis.fetch;
     const search = new URLSearchParams({
       apikey: options.ameapi,
       t: "search",
       info_hash: hash
-    }), res = await fetch(this.url + search.toString());
+    }), res = await fetchFn(this.url + search.toString());
     if (!res.ok) return;
     const enclosureMatch = (await res.text()).match(/<enclosure url="([^"]+)"[^>]*>/);
     if (enclosureMatch) return enclosureMatch[1].replaceAll("&amp;", "&");
@@ -30,31 +31,33 @@ export default new class AmeNZB {
       apikey: options.ameapi,
       t: "search",
       q: name
-    }), stringRes = await fetch(this.url + stringSearch.toString());
+    }), stringRes = await fetchFn(this.url + stringSearch.toString());
     return stringRes.ok ? this._findByName(await stringRes.text(), name) : void 0;
   }
   async single({hash: hash, file: file}, options) {
-    if (!navigator.onLine || !options.ameapi) return;
+    if (!navigator.onLine || !options?.ameapi) return;
+    const fetchFn = options?.fetch || globalThis.fetch;
     const search = new URLSearchParams({
       apikey: options.ameapi,
       t: "search",
       info_hash: hash
-    }), res = await fetch(this.url + search.toString());
+    }), res = await fetchFn(this.url + search.toString());
     if (!res.ok) return;
     if ((await res.text()).match(/<enclosure url="([^"]+)"[^>]*>/)) return;
     const stringSearch = new URLSearchParams({
       apikey: options.ameapi,
       t: "search",
       q: file
-    }), stringRes = await fetch(this.url + stringSearch.toString());
+    }), stringRes = await fetchFn(this.url + stringSearch.toString());
     return stringRes.ok ? this._findByName(await stringRes.text(), file) : void 0;
   }
   async test() {
     try {
-      if (!(await fetch(this.url)).ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
+      const res = await fetch(this.url);
+      if (!res.ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
       return !0;
     } catch (error) {
-      throw new Error(`Could not reach ${this.url}! Does the site work in your region?`);
+      throw new Error(`Could not reach ${this.url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
     }
   }
 };
