@@ -17,7 +17,7 @@ https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.jso
 
 | Extension | Type | Accuracy | Media | Status |
 |-----------|------|----------|-------|--------|
-| [Seadex](./seadex.js) | torrent | high | subtitles | Deprecated |
+| [Seadex](./seadex.js) | torrent | high | subtitles | Offline |
 | [NyaaSi](./nyaasi.js) | torrent | medium | subtitles | Active |
 | [TorrentGalaxy](./torrentgalaxy.js) | torrent | medium | both | Active |
 | [Sukebei](./sukebei-hentai.js) | torrent | — | — | Active |
