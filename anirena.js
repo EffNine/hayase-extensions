@@ -1,6 +1,5 @@
 export default new class AniRena {
   base = atob("aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20vcnNz");
-  corsProxyDefault = "https://api.allorigins.win/raw?url=";
 
   async _fetchWithCors(url, fetchFn) {
     // Use passed fetch (from Hayase app) to bypass CORS

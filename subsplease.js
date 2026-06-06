@@ -1,7 +1,6 @@
 export default new class SubsPlease {
   url = atob("aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZw==");
   rssUrl = atob("aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZy9yc3M=");
-  corsProxyDefault = "https://api.allorigins.win/raw?url=";
 
   async _fetch(fetchFn, search) {
     const url = `${this.rssUrl}?${search}`;
