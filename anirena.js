@@ -87,8 +87,8 @@ export default new class AniRena {
 
     // Extract anime title (remove group prefix and episode info)
     // Format: [Group] Anime Title - EP XX [Resolution]
-    // Must use greedy match through the dash+episode to capture full title
-    const animeMatch = title.match(/^\[([^\]]+)\]\s*(.+?)\s*[-–]\s*\d+/);
+    // Must match through the dash+EP to capture full title
+    const animeMatch = title.match(/^\[([^\]]+)\]\s*(.+?)\s*[-–]\s*(?:EP\s*)?\d+/);
     const animeTitle = animeMatch ? animeMatch[2].trim() : title;
 
     return { ep, resolution, group, animeTitle };
