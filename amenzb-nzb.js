@@ -1,5 +1,5 @@
 export default new class AmeNZB {
-  url="https://amenzb.moe/api?";
+  url=atob("aHR0cHM6Ly9hbWVuemIubW9lL2FwaT8=");
   _parseItems(string) {
     const itemRegex = /<item>([\s\S]*?)<\/item>/g, items = [];
     for (const itemMatch of string.matchAll(itemRegex)) {

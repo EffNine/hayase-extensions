@@ -1,5 +1,5 @@
 export default new class AniRena {
-  base = "https://www.anirena.com/rss";
+  base = atob("aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20vcnNz");
   corsProxyDefault = "https://api.allorigins.win/raw?url=";
 
   async _fetchWithCors(url, fetchFn) {
