@@ -86,7 +86,9 @@ export default new class AniRena {
     const group = groupMatch ? groupMatch[1] : "";
 
     // Extract anime title (remove group prefix and episode info)
-    const animeMatch = title.match(/^\[([^\]]+)\]\s*(.+?)(?:\s*[-–]\s*\d+)?$/);
+    // Format: [Group] Anime Title - EP XX [Resolution]
+    // Must use greedy match through the dash+episode to capture full title
+    const animeMatch = title.match(/^\[([^\]]+)\]\s*(.+?)\s*[-–]\s*\d+/);
     const animeTitle = animeMatch ? animeMatch[2].trim() : title;
 
     return { ep, resolution, group, animeTitle };
@@ -99,6 +101,7 @@ export default new class AniRena {
   }
 
   async single(query, options) {
+    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const items = await this._getRSS(query.fetch);
@@ -108,6 +111,7 @@ export default new class AniRena {
   }
 
   async batch(query, options) {
+    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const items = await this._getRSS(query.fetch);
@@ -117,6 +121,7 @@ export default new class AniRena {
   }
 
   async movie(query, options) {
+    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const items = await this._getRSS(query.fetch);

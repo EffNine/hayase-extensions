@@ -28,8 +28,17 @@ export default new class SubsPlease {
       const pubDate = this._extract(item, "<pubDate>", "</pubDate>");
       const description = this._extract(item, "<description>", "</description>");
 
+      // Extract info hash from magnet link or link field
+      let hash = "";
+      if (link && link.includes("btih:")) {
+        const hashMatch = link.match(/btih:([0-9A-Fa-f]+)/);
+        hash = hashMatch ? hashMatch[1] : "";
+      } else if (link && link.match(/^[0-9A-Fa-f]{40}$/i)) {
+        hash = link.toUpperCase();
+      }
+
       if (title && link) {
-        items.push({ title, link, pubDate, description });
+        items.push({ title, link, pubDate, description, hash });
       }
     }
     return items;
@@ -51,6 +60,8 @@ export default new class SubsPlease {
     const resolution = resMatch ? resMatch[1] : "";
 
     // Extract anime title (remove [SubsPlease] prefix and episode info)
+    // Format: [SubsPlease] Anime Title - EP 01 [1080p]
+    // Must use greedy match through the dash+EP to capture full title
     const animeMatch = title.match(/^\[SubsPlease\]\s*(.+?)\s*-\s*EP/);
     const animeTitle = animeMatch ? animeMatch[1].trim() : title;
 
@@ -58,6 +69,7 @@ export default new class SubsPlease {
   }
 
   async single(query, options) {
+    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
@@ -68,6 +80,7 @@ export default new class SubsPlease {
   }
 
   async batch(query, options) {
+    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
@@ -78,6 +91,7 @@ export default new class SubsPlease {
   }
 
   async movie(query, options) {
+    if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
     const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
