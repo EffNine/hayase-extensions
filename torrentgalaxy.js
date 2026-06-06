@@ -1,6 +1,5 @@
 export default new class TorrentGalaxy {
   base = atob("aHR0cHM6Ly90b3JyZW50Z2FsYXh5LnRvL3RvcnJlbnRzLnBocD9zZWFyY2g9")
-  corsProxyDefault = 'https://api.allorigins.win/raw?url='
 
   buildQuery(title, episode) {
     let q = title.replace(/[^\w\s-]/g, ' ').trim()
@@ -8,7 +7,8 @@ export default new class TorrentGalaxy {
     return encodeURIComponent(q)
   }
 
-  async single({ titles, episode, fetch: fetchFn }, options) {
+  async single({ titles, episode }, options) {
+    if (!navigator.onLine) return []
     if (!titles?.length) return []
 
     const q = this.buildQuery(titles[0], episode)
@@ -18,7 +18,7 @@ export default new class TorrentGalaxy {
       url = proxy + encodeURIComponent(this.base + q)
     }
 
-    const res = await fetchFn(url)
+    const res = await fetch(url)
     const text = await res.text()
 
     // Extract magnet links and titles from the HTML

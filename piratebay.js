@@ -1,8 +1,8 @@
 export default new class PirateBay {
   base = atob("aHR0cHM6Ly9hcGliYXkub3JnL3EucGhwP3E9")
-  corsProxyDefault = 'https://api.allorigins.win/raw?url='
 
-  async single({ titles, episode, fetch: fetchFn }, options) {
+  async single({ titles, episode }, options) {
+    if (!navigator.onLine) return []
     if (!titles?.length) return []
 
     const query = this.buildQuery(titles[0], episode)
@@ -11,7 +11,7 @@ export default new class PirateBay {
     let url = this.base + queryEncoded
 
     try {
-      return await this._fetchWithCorsFallback(url, fetchFn);
+      return await this._fetchWithCorsFallback(url);
     } catch (error) {
       console.error('Error fetching data from Pirate Bay API:', error);
       const errorMessage = error instanceof Error ? error.message : String(error);
@@ -49,14 +49,14 @@ export default new class PirateBay {
     })
   }
 
-  async _fetchWithRetry(url, fetchFn) {
+  async _fetchWithRetry(url) {
     const maxRetries = 3;
     let lastError = null;
 
     for (let attempt = 0; attempt < maxRetries; attempt++) {
       try {
         console.log(`Attempting to fetch data from Pirate Bay API (Attempt ${attempt + 1}/${maxRetries})...`);
-        const res = await fetchFn(url);
+        const res = await fetch(url);
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status} ${res.statusText}`);
 
         // Attempt to parse JSON, which might fail if the API returns non-JSON on error
@@ -74,16 +74,16 @@ export default new class PirateBay {
     throw lastError || new Error('Failed to fetch data after multiple retries.');
   }
 
-  async _fetchWithCorsFallback(url, fetchFn) {
+  async _fetchWithCorsFallback(url) {
     // Try direct fetch first
     try {
-      return await this._fetchWithRetry(url, fetchFn);
+      return await this._fetchWithRetry(url);
     } catch (error) {
       // If direct fetch fails (likely CORS), try with CORS proxy
       console.warn('Direct fetch failed, attempting CORS proxy fallback...');
       const proxyUrl = this.corsProxyDefault + encodeURIComponent(url);
       try {
-        return await this._fetchWithRetry(proxyUrl, fetchFn);
+        return await this._fetchWithRetry(proxyUrl);
       } catch (proxyError) {
         console.error('Both direct and proxy fetch failed:', proxyError);
         throw proxyError;
@@ -94,7 +94,7 @@ export default new class PirateBay {
   async test(options) {
     try {
       const url = this.base + 'test';
-      await fetch(url);
+      await this._fetchWithCorsFallback(url);
       return true;
     } catch (error) {
       throw new Error('Could not connect to The Pirate Bay API');
