@@ -1,17 +1,16 @@
 export default new class PirateBay {
   base = atob("aHR0cHM6Ly9hcGliYXkub3JnL3EucGhwP3E9")
 
-  async single({ titles, episode }, options) {
+  async single({ titles, episode, fetch: fetchFn }, options) {
     if (!navigator.onLine) return []
     if (!titles?.length) return []
 
     const query = this.buildQuery(titles[0], episode)
     const queryEncoded = encodeURIComponent(query)
-    // Removed proxy logic: use direct base URL
-    let url = this.base + queryEncoded
+    const url = this.base + queryEncoded
 
     try {
-      return await this._fetchWithCorsFallback(url);
+      return await this._fetchWithCorsFallback(url, fetchFn);
     } catch (error) {
       console.error('Error fetching data from Pirate Bay API:', error);
       const errorMessage = error instanceof Error ? error.message : String(error);
@@ -49,24 +48,22 @@ export default new class PirateBay {
     })
   }
 
-  async _fetchWithRetry(url) {
+  async _fetchWithRetry(url, fetchFn) {
     const maxRetries = 3;
     let lastError = null;
 
     for (let attempt = 0; attempt < maxRetries; attempt++) {
       try {
         console.log(`Attempting to fetch data from Pirate Bay API (Attempt ${attempt + 1}/${maxRetries})...`);
-        const res = await fetch(url);
+        const res = await fetchFn(url);
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status} ${res.statusText}`);
 
-        // Attempt to parse JSON, which might fail if the API returns non-JSON on error
-        return await res.json(); 
+        return await res.json();
       } catch (error) {
         lastError = error;
         console.warn(`Fetch attempt failed: ${error.message}. Retrying in ${Math.pow(2, attempt)} seconds...`);
 
         if (attempt < maxRetries - 1) {
-          // Exponential backoff: wait 2^attempt seconds
           await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
         }
       }
@@ -74,21 +71,9 @@ export default new class PirateBay {
     throw lastError || new Error('Failed to fetch data after multiple retries.');
   }
 
-  async _fetchWithCorsFallback(url) {
-    // Try direct fetch first
-    try {
-      return await this._fetchWithRetry(url);
-    } catch (error) {
-      // If direct fetch fails (likely CORS), try with CORS proxy
-      console.warn('Direct fetch failed, attempting CORS proxy fallback...');
-      const proxyUrl = this.corsProxyDefault + encodeURIComponent(url);
-      try {
-        return await this._fetchWithRetry(proxyUrl);
-      } catch (proxyError) {
-        console.error('Both direct and proxy fetch failed:', proxyError);
-        throw proxyError;
-      }
-    }
+  async _fetchWithCorsFallback(url, fetchFn) {
+    // Use injected fetch (handles CORS via cors:// on iOS)
+    return await this._fetchWithRetry(url, fetchFn);
   }
 
   async test(options) {

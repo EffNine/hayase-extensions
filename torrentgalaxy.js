@@ -7,18 +7,14 @@ export default new class TorrentGalaxy {
     return encodeURIComponent(q)
   }
 
-  async single({ titles, episode }, options) {
+  async single({ titles, episode, fetch: fetchFn }, options) {
     if (!navigator.onLine) return []
     if (!titles?.length) return []
 
     const q = this.buildQuery(titles[0], episode)
-    let url = this.base + q
-    if (options?.useCorsProxy) {
-      const proxy = options.proxyUrl || this.corsProxyDefault
-      url = proxy + encodeURIComponent(this.base + q)
-    }
+    const url = this.base + q
 
-    const res = await fetch(url)
+    const res = await fetchFn(url)
     const text = await res.text()
 
     // Extract magnet links and titles from the HTML
@@ -51,12 +47,7 @@ export default new class TorrentGalaxy {
 
   async test(options) {
     try {
-      let url = this.base
-      if (options?.useCorsProxy) {
-        const proxy = options.proxyUrl || this.corsProxyDefault
-        url = proxy + encodeURIComponent(this.base)
-      }
-      const res = await fetch(url)
+      const res = await fetch(this.base)
       return res.ok
     } catch (e) {
       return false
