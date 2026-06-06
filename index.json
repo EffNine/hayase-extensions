@@ -317,7 +317,7 @@
       ],
       "description": "Long-standing anime torrent tracker",
       "url": "aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20=",
-      "icon": "https://www.anirena.com/favicon.ico",
+      "icon": "https://www.google.com/s2/favicons?domain=anirena.com&sz=64",
       "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
       "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/anirena.js"
     }
