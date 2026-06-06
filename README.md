@@ -17,7 +17,7 @@ https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.jso
 
 | Extension | Type | Accuracy | Media | Status |
 |-----------|------|----------|-------|--------|
-| [Seadex](./seadex.js) | torrent | high | subtitles | Offline |
+| [Seadex](./seadex.js) | torrent | high | subtitles | Active |
 | [AnimeTosho](./animetosho.js) | torrent | high | subtitles | Active |
 | [AnimeTosho NZB](./animetosho-nzb.js) | nzb | high | subtitles | Active |
 | [NyaaSi](./nyaasi.js) | torrent | medium | subtitles | Active |
