@@ -4,7 +4,7 @@
   "description": "Extensions for Hayase",
   "main": "index.json",
   "types": "index.d.ts",
-  "repository": "https://github.com/afnanrudy/extensions",
+  "repository": "https://github.com/EffNine/hayase-extensions",
   "dependencies": {
     "@ejnshtein/nyaasi": "^3.1.3"
   },

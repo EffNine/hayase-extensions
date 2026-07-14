@@ -1,0 +1,8 @@
+# Rewrite all historical authors to effnine for push migration
+# First pass identity
+effnine <effnine@users.noreply.github.com> <afnanrudy@users.noreply.github.com>
+
+# Second pass identities identified after inspection
+effnine <effnine@users.noreply.github.com> afnan rudy <afnanbakar95@gmail.com>
+effnine <effnine@users.noreply.github.com> well above stars <afnanbakar95@gmail.com>
+effnine <effnine@users.noreply.github.com> VS Code <vscode@users.noreply.github.com>
