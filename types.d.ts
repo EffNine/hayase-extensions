@@ -10,7 +10,6 @@ export interface Tosho {
   torrent_downloaded_count?: number
   total_size: number
   num_files: number
-  torrent_url?: string
   article_url?: string
   website_url?: string
   nyaa_id?: string

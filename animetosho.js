@@ -22,37 +22,38 @@ export default new class Tosho {
       date: new Date(1e3 * entry.timestamp)
     }));
   }
-  async single({anidbEid: anidbEid, resolution: resolution, exclusions: exclusions}, options) {
+  async single({anidbEid: anidbEid, resolution: resolution, exclusions: exclusions, fetch: fetchFn}, options) {
     if (!navigator.onLine) return [];
     if (!anidbEid) throw new Error("No anidbEid provided");
     const query = this._buildQuery({
       resolution: resolution,
       exclusions: exclusions
-    }), res = await fetch(this.url + "?eid=" + anidbEid + query), data = await res.json();
+    }), res = await fetchFn(this.url + "?eid=" + anidbEid + query), data = await res.json();
     return data.length ? this.map(data, !1, options?.useTorrent) : [];
   }
-  async batch({anidbAid: anidbAid, resolution: resolution, exclusions: exclusions, episode: episode}, options) {
+  async batch({anidbAid: anidbAid, resolution: resolution, exclusions: exclusions, episode: episode, fetch: fetchFn}, options) {
     if (!navigator.onLine) return [];
     if (!anidbAid) throw new Error("No anidbAid provided");
     const query = this._buildQuery({
       resolution: resolution,
       exclusions: exclusions
-    }), res = await fetch(this.url + "?order=size-d&aid=" + anidbAid + query), data = (await res.json()).filter(entry => entry.num_files >= Math.min(24, Math.max(2, episode ?? 1)));
+    }), res = await fetchFn(this.url + "?order=size-d&aid=" + anidbAid + query), data = (await res.json()).filter(entry => entry.num_files >= Math.min(24, Math.max(2, episode ?? 1)));
     return data.length ? this.map(data, !0, options?.useTorrent) : [];
   }
-  async movie({anidbAid: anidbAid, resolution: resolution, exclusions: exclusions}, options) {
+  async movie({anidbAid: anidbAid, resolution: resolution, exclusions: exclusions, fetch: fetchFn}, options) {
     if (!navigator.onLine) return [];
     if (!anidbAid) throw new Error("No anidbAid provided");
     const query = this._buildQuery({
       resolution: resolution,
       exclusions: exclusions
-    }), res = await fetch(this.url + "?aid=" + anidbAid + query), data = await res.json();
+    }), res = await fetchFn(this.url + "?aid=" + anidbAid + query), data = await res.json();
     return data.length ? this.map(data, !1, options?.useTorrent) : [];
   }
-  async test() {
+  async test(options) {
     try {
-      if (!(await fetch(this.url)).ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
-      return !0;
+      const fetchFn = options?.fetch || fetch;
+      if (!(await fetchFn(this.url)).ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
+      return true;
     } catch (error) {
       throw new Error(`Could not reach ${this.url}! Does the site work in your region?`);
     }

@@ -1,7 +1,7 @@
 import { NyaaRss } from '@ejnshtein/nyaasi'
 
 export default new class NyaaSi {
-  async single({ titles, episode }) {
+  async single({ titles, episode, resolution, exclusions }) {
     if (!navigator.onLine) return []
     if (!titles?.length) return []
 
@@ -10,7 +10,7 @@ export default new class NyaaSi {
 
     if (!Array.isArray(data)) return []
 
-    return this.map(data)
+    return this.map(data, resolution, exclusions)
   }
 
   batch = this.single
@@ -22,8 +22,21 @@ export default new class NyaaSi {
     return query
   }
 
-  map(items) {
-    return items.map(item => {
+  map(items, resolution, exclusions) {
+    const excl = (exclusions || []).map(e => e.toLowerCase())
+    const resFilter = resolution ? resolution.replace('p', '') : null
+
+    return items
+      .filter(item => {
+        const title = (item.title || '').toLowerCase()
+        if (excl.length && excl.some(e => title.includes(e))) return false
+        if (resFilter) {
+          const resMatch = title.match(/(\d{3,4})p/)
+          if (resMatch && resMatch[1] !== resFilter) return false
+        }
+        return true
+      })
+      .map(item => {
       const hash = item.infoHash || ''
       const magnet = hash ? `magnet:?xt=urn:btih:${hash}&dn=${encodeURIComponent(item.title || '')}` : ''
 
@@ -36,7 +49,6 @@ export default new class NyaaSi {
         downloads: parseInt(item.downloads || '0'),
         size: this.parseSize(item.size || ''),
         date: new Date(item.pubDate),
-        verified: (item.trusted || '').toLowerCase() === 'yes',
         type: 'alt',
         accuracy: 'medium'
       }

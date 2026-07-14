@@ -150,7 +150,7 @@ export default new class AniRena {
         }
 
         if (resolution) {
-          if (parsed.resolution === resolution) return true;
+          if (parsed.resolution.startsWith(resolution)) return true;
           if (isBatch) return true;
         }
 
@@ -179,9 +179,10 @@ export default new class AniRena {
       });
   }
 
-  async test() {
+  async test(options) {
     try {
-      const res = await fetch(this.base);
+      const fetchFn = options?.fetch || fetch;
+      const res = await fetchFn(this.base);
       if (!res.ok) throw new Error(`Failed to load data from ${this.base}! Is the site down?`);
       return true;
     } catch (error) {

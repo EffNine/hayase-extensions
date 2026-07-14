@@ -1,3 +1,5 @@
+const QUALITIES = [ "1080", "720", "540", "480" ];
+
 export default new class NekoBT {
   url=atob("aHR0cHM6Ly9uZWtvYnQudG8vYXBpL3YxLw==");
   async _fetch(fetch, search) {
@@ -6,7 +8,7 @@ export default new class NekoBT {
     if (!json.data) throw new Error("NekoBT: Invalid response from server!");
     return json.data;
   }
-  async single({tvdbId: tvdbId, tvdbEId: tvdbEId, tmdbId: tmdbId, episode: episode, fetch: fetch}, options) {
+  async single({tvdbId: tvdbId, tvdbEId: tvdbEId, tmdbId: tmdbId, episode: episode, fetch: fetch, resolution: resolution, exclusions: exclusions}, options) {
     if (!navigator.onLine) return [];
     const mediaParams = new URLSearchParams({
       limit: "1"
@@ -21,7 +23,10 @@ export default new class NekoBT {
     });
     ep?.id && searchParams.append("episode_ids", ep.id.toString());
     const high = ep?.tvdbId === tvdbEId;
-    return (await this._fetch(fetch, searchParams)).results?.map(entry => ({
+    exclusions = (exclusions || []).map(e => e.toLowerCase());
+    const excl = resolution ? exclusions.concat(...QUALITIES.filter(q => q !== resolution).map(q => `${q}p`)) : exclusions;
+    return (await this._fetch(fetch, searchParams)).results?.filter(({title: title}) => !excl.length || (title = title.toLowerCase(), 
+    !excl.some(excl => title.includes(excl)))).map(entry => ({
       title: entry.title,
       link: `${this.url}torrents/${entry.id}/download?public=true`,
       seeders: Number(entry.seeders),
@@ -36,11 +41,12 @@ export default new class NekoBT {
   }
   batch=() => [];
   movie=() => [];
-  async test() {
+  async test(options) {
     try {
-      const {ok: ok} = await fetch(this.url + "announcements");
+      const fetchFn = options?.fetch || fetch;
+      const {ok: ok} = await fetchFn(this.url + "announcements");
       if (!ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
-      return !0;
+      return true;
     } catch (error) {
       throw new Error(`Could not reach ${this.url}! Does the site work in your region?`);
     }

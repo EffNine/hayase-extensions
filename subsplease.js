@@ -71,7 +71,7 @@ export default new class SubsPlease {
     if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
-    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
+    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "";
     const items = await this._fetch(query.fetch, `r=${resParam}`);
     if (!items?.length) return [];
 
@@ -82,7 +82,7 @@ export default new class SubsPlease {
     if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
-    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
+    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "";
     const items = await this._fetch(query.fetch, `r=${resParam}`);
     if (!items?.length) return [];
 
@@ -93,7 +93,7 @@ export default new class SubsPlease {
     if (!navigator.onLine) return [];
     if (!query.titles?.length) return [];
 
-    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "sd";
+    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "";
     const items = await this._fetch(query.fetch, `r=${resParam}`);
     if (!items?.length) return [];
 
@@ -132,16 +132,17 @@ export default new class SubsPlease {
         leechers: 0,
         downloads: 0,
         size: 0,
-        accuracy: isBest ? "high" : "medium",
+        accuracy: "high",
         date: item.pubDate ? new Date(item.pubDate) : new Date(),
         type: isBatch ? "batch" : undefined,
       };
     });
   }
 
-  async test() {
+  async test(options) {
     try {
-      const res = await fetch(`${this.rssUrl}?r=1080`);
+      const fetchFn = options?.fetch || fetch;
+      const res = await fetchFn(`${this.rssUrl}?r=1080`);
       if (!res.ok) throw new Error(`Failed to load data from ${this.rssUrl}! Is the site down?`);
       return true;
     } catch (error) {

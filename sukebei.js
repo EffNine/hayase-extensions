@@ -7,7 +7,7 @@ const sizeMap = {
 
 export default new class {
   url=atob("aHR0cHM6Ly9zdWtlYmVpLm55YWEuc2kv");
-  async single({media: media, episode: episode, exclusions: exclusions, episodeCount: episodeCount, absoluteEpisodeNumber: absoluteEpisodeNumber}, _, isBatch = !1) {
+  async single({media: media, episode: episode, exclusions: exclusions, episodeCount: episodeCount, absoluteEpisodeNumber: absoluteEpisodeNumber, fetch: fetchFn}, _, isBatch = !1) {
     if (!navigator.onLine) return [];
     if (!media.isAdult && !media.genres.includes("Hentai")) return [];
     const titles = createTitle([ ...Object.values(media.title), ...media.synonyms ]).join(")|("), prequel = findEdge(media, "PREQUEL")?.node, sequel = findEdge(media, "SEQUEL")?.node, absoluteep = absoluteEpisodeNumber ?? episode, episodes = [ episode ];
@@ -17,7 +17,7 @@ export default new class {
       const digits = Math.max(2, episodeCount.toString().length);
       ep = `"${zeropad(1, digits)}-${zeropad(episodeCount, digits)}"|"${zeropad(1, digits)}~${zeropad(episodeCount, digits)}"|"1-${episodeCount}"|"1~${episodeCount}"|"batch"|"complete"${prequel ? "" : '|"S01"'}`;
     } else ep = `${episodes.map(epstring).join("|")}`;
-    let entries = parseRSSItems(await getRSSContent(`${this.url}?page=rss&c=1_1&s=seeders&o=desc&q=(${titles})${ep}${exclusions.length ? `-"${exclusions.join('"|"')}"` : ""}`));
+    let entries = parseRSSItems(await getRSSContent(`${this.url}?page=rss&c=1_1&s=seeders&o=desc&q=(${titles})${ep}${exclusions.length ? `-"${exclusions.join('"|"')}"` : ""}`, fetchFn));
     const checkSequelDate = "FINISHED" === media.status && ("FINISHED" === sequel?.status || "RELEASING" === sequel?.status) && sequel.startDate, sequelStartDate = checkSequelDate && new Date(Object.values(checkSequelDate).join(" ")), checkPrequelDate = ("FINISHED" === media.status || "RELEASING" === media.status) && "FINISHED" === prequel?.status && prequel?.endDate, prequelEndDate = checkPrequelDate && new Date(Object.values(checkPrequelDate).join(" "));
     return prequelEndDate && (entries = entries.filter(entry => entry.date > new Date(+prequelEndDate + 10699393840))), 
     sequelStartDate && "TV" === media.format && (entries = entries.filter(entry => entry.date < new Date(+sequelStartDate - 10699393840))), 
@@ -25,10 +25,11 @@ export default new class {
   }
   batch=(args, opts) => this.single(args, opts, !0);
   movie=this.batch;
-  async test() {
+  async test(options) {
     try {
-      if (!(await fetch(this.url)).ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
-      return !0;
+      const fetchFn = options?.fetch || fetch;
+      if (!(await fetchFn(this.url)).ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
+      return true;
     } catch (error) {
       throw new Error(`Could not reach ${this.url}! Does the site work in your region?`);
     }
@@ -79,10 +80,10 @@ function parseRSSItems(xml) {
   return items;
 }
 
-async function getRSSContent(url) {
+async function getRSSContent(url, fetchFn) {
   if (!url) return null;
   try {
-    const res = await fetch(url);
+    const res = await fetchFn(url);
     if (!res.ok) throw new Error("Failed fetching RSS!\n" + res.statusText);
     return await res.text();
   } catch (e) {

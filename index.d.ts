@@ -48,6 +48,16 @@ export interface TorrentQuery {
   resolution: '2160' | '1080' | '720' | '540' | '480' | ''
   exclusions: string[] // list of keywords to exclude from searches
   type?: 'sub' | 'dub'
+  fetch?: (url: string) => Promise<Response>
+  tvdbId?: number
+  tvdbEId?: number
+  tmdbId?: number
+  media?: any
+  absoluteEpisodeNumber?: number
+  name?: string
+  file?: string
+  files?: string[]
+  hash?: string
 }
 
 export type SearchFunction = (query: TorrentQuery, options?: {
