@@ -13,31 +13,6 @@ Copy the link below and import it into the Hayase app:
 https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json
 ```
 
-## Available Extensions
-
-| Extension | Type | Accuracy | Media | Status |
-|-----------|------|----------|-------|--------|
-| [Seadex](./seadex.js) | torrent | high | subtitles | Active |
-| [AnimeTosho](./animetosho.js) | torrent | high | subtitles | Active |
-| [AnimeTosho NZB](./animetosho-nzb.js) | nzb | high | subtitles | Active |
-| [NyaaSi](./nyaasi.js) | torrent | medium | subtitles | Active |
-| [NekoBT](./nekobt.js) | torrent | high | subtitles | Active |
-| [NekoBT MultiSub](./nekobt-multi.js) | torrent | high | subtitles | Active |
-| [ameNZB](./amenzb-nzb.js) | nzb | high | subtitles | Active |
-| [SubsPlease](./subsplease.js) | torrent | high | subtitles | Active |
-| [AniRena](./anirena.js) | torrent | medium | subtitles | Active |
-| [Sukebei](./sukebei.js) | torrent | medium | both | Active |
-
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Run auto-commit tool
-npm run auto-commit
-```
-
 ## Contributing
 
 Contributions are welcome! Please ensure:
