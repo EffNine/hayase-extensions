@@ -94,7 +94,7 @@ function map(items, resolution, exclusions) {
 
 async function test() {
   try {
-    const res = await fetch(url);
+    const res = await fetch(`${url}?page=rss&c=1_0&f=0&q=test`);
     return res.ok;
   } catch (error) {
     throw new Error('Could not connect to Nyaa.si API');

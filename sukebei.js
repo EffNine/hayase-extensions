@@ -34,7 +34,7 @@ const movie = batch;
 
 async function test() {
   try {
-    if (!(await fetch(url)).ok) throw new Error(`Failed to load data from ${url}! Is the site down?`);
+    if (!(await fetch(`${url}?page=rss&c=1_1&s=seeders&o=desc&q=test`)).ok) throw new Error(`Failed to load data from ${url}! Is the site down?`);
     return true;
   } catch (error) {
     throw new Error(`Could not reach ${url}! Does the site work in your region?`);
