@@ -3,7 +3,7 @@
 ## Cursor Cloud specific instructions
 
 ### What this repo is
-This is **not a runnable app** — it is a catalog of [Hayase](https://github.com/afnanrudy/hayase-new-extensions)
+This is **not a runnable app** — it is a catalog of [Hayase](https://github.com/EffNine/hayase-extensions)
 extensions. Each `*.js` file is a standalone ES module (`export default`) implementing a torrent/NZB
 indexer source, and `index.json` is the manifest catalog Hayase loads them from. There is no server,
 no build step, and no automated test framework in this repo.

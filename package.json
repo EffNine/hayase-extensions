@@ -4,7 +4,7 @@
   "description": "Extensions for Hayase",
   "main": "index.json",
   "types": "index.d.ts",
-  "repository": "https://github.com/afnanrudy/hayase-new-extensions",
+  "repository": "https://github.com/EffNine/hayase-extensions",
   "devDependencies": {
     "chokidar": "^3.5.3"
   },

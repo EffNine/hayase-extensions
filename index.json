@@ -14,8 +14,8 @@
         "US"
       ],
       "icon": "https://releases.moe/favicon.png",
-      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/seadex.js"
+      "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/seadex.js"
     },
     {
       "manifestVersion": 2,
@@ -32,8 +32,8 @@
         "US"
       ],
       "icon": "https://animetosho.org/inc/favicon.ico",
-      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/animetosho.js",
+      "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/animetosho.js",
       "reason": "Use AnimeTosho (New) instead",
       "options": {
         "useTorrent": {
@@ -58,8 +58,8 @@
         "US"
       ],
       "icon": "https://animetosho.org/inc/favicon.ico",
-      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/animetosho-nzb.js"
+      "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/animetosho-nzb.js"
     },
     {
       "manifestVersion": 2,
@@ -76,8 +76,8 @@
         "US"
       ],
       "icon": "https://nyaa.si/static/favicon.png",
-      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/nyaasi.js"
+      "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/nyaasi.js"
     },
     {
       "manifestVersion": 2,
@@ -96,8 +96,8 @@
       ],
       "url": "aHR0cHM6Ly9uZWtvYnQudG8vYXBpL3YxLw==",
       "icon": "https://nekobt.to/cdn/pfp/null/64",
-      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/nekobt.js"
+      "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/nekobt.js"
     },
     {
       "manifestVersion": 2,
@@ -112,8 +112,8 @@
       "description": "NekoBT with multi-language subtitle support",
       "languages": ["ALL"],
       "icon": "https://nekobt.to/cdn/pfp/null/64",
-      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/nekobt-multi.js",
+      "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/nekobt-multi.js",
       "options": {
         "language": {
           "type": "select",
@@ -139,8 +139,8 @@
       "languages": ["US"],
       "url": "aHR0cHM6Ly9hbWVuemIubW9l",
       "icon": "https://amenzb.moe/static/posters/ame.png",
-      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/amenzb-nzb.js",
+      "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/amenzb-nzb.js",
       "options": {
         "ameapi": {
           "type": "string",
@@ -163,8 +163,8 @@
       "description": "Popular anime subs tracker with RSS feeds",
       "url": "aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZw==",
       "icon": "https://subsplease.org/favicon.ico",
-      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/subsplease.js"
+      "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/subsplease.js"
     },
     {
       "manifestVersion": 2,
@@ -182,8 +182,8 @@
       "description": "Long-standing anime torrent tracker",
       "url": "aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20=",
       "icon": "https://www.google.com/s2/favicons?domain=anirena.com&sz=64",
-      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/anirena.js"
+      "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/anirena.js"
     },
     {
       "manifestVersion": 2,
@@ -200,7 +200,7 @@
       ],
       "description": "Anime doujinshi and manga torrent tracker",
       "icon": "https://nyaa.si/static/favicon.png",
-      "update": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/sukebei.js"
+      "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/sukebei.js"
     }
 ]
