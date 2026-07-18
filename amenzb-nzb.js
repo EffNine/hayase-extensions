@@ -17,7 +17,7 @@ export default new class AmeNZB {
     return (items.find(item => item.nzbname?.includes(name)) || items.find(item => item.title?.includes(name)) || items.find(item => item.nzbname?.includes(nameWithoutExt)) || items.find(item => item.title?.includes(nameWithoutExt)))?.link?.replaceAll("&amp;", "&");
   }
   async batch({hash: hash, name: name, files: files, fetch: fetchFn}, options) {
-    if (!navigator.onLine || !options?.ameapi) return;
+    if ((typeof navigator !== 'undefined' && !navigator.onLine) || !options?.ameapi) return;
     const search = new URLSearchParams({
       apikey: options.ameapi,
       t: "search",
@@ -34,7 +34,7 @@ export default new class AmeNZB {
     return stringRes.ok ? this._findByName(await stringRes.text(), name) : void 0;
   }
   async single({hash: hash, file: file, fetch: fetchFn}, options) {
-    if (!navigator.onLine || !options?.ameapi) return;
+    if ((typeof navigator !== 'undefined' && !navigator.onLine) || !options?.ameapi) return;
     const search = new URLSearchParams({
       apikey: options.ameapi,
       t: "search",

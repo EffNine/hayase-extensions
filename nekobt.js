@@ -9,7 +9,7 @@ export default new class NekoBT {
     return json.data;
   }
   async single({tvdbId: tvdbId, tvdbEId: tvdbEId, tmdbId: tmdbId, episode: episode, fetch: fetch, resolution: resolution, exclusions: exclusions}, options) {
-    if (!navigator.onLine) return [];
+    if (typeof navigator !== 'undefined' && !navigator.onLine) return [];
     const mediaParams = new URLSearchParams({
       limit: "1"
     });

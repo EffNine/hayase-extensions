@@ -14,8 +14,7 @@
       ],
       "icon": "https://releases.moe/favicon.png",
       "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
-      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/seadex.js",
-      "reason": "Service unavailable"
+      "code": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/seadex.js"
     },
     {
       "manifestVersion": 2,
