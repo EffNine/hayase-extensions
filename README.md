@@ -10,7 +10,7 @@ Extensions for the Hayase app. These extensions add support for multiple torrent
 Copy the link below and import it into the Hayase app:
 
 ```
-https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json
+https://raw.githubusercontent.com/afnanrudy/hayase-new-extensions/main/index.json
 ```
 
 ## Contributing
