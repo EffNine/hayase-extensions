@@ -8,7 +8,7 @@ export default new class TorrentGalaxy {
   }
 
   async single({ titles, episode, fetch: fetchFn }, options) {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) return []
+    if (typeof navigator !== 'undefined' && !navigator.isOnline) return []
     if (!titles?.length) return []
 
     const q = this.buildQuery(titles[0], episode)

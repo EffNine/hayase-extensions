@@ -8,7 +8,7 @@ const sizeMap = {
 export default new class {
   url=atob("aHR0cHM6Ly9zdWtlYmVpLm55YWEuc2kv");
   async single({media: media, episode: episode, exclusions: exclusions, episodeCount: episodeCount, absoluteEpisodeNumber: absoluteEpisodeNumber, fetch: fetchFn}, _, isBatch = !1) {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) return [];
+    if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
     if (!media.isAdult && !media.genres.includes("Hentai")) return [];
     const titles = createTitle([ ...Object.values(media.title), ...media.synonyms ]).join(")|("), prequel = findEdge(media, "PREQUEL")?.node, sequel = findEdge(media, "SEQUEL")?.node, absoluteep = absoluteEpisodeNumber ?? episode, episodes = [ episode ];
     absoluteep !== episode && absoluteep > episodeCount && episodes.push(absoluteep);

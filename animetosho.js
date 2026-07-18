@@ -23,7 +23,7 @@ export default new class Tosho {
     }));
   }
   async single({anidbEid: anidbEid, resolution: resolution, exclusions: exclusions, fetch: fetchFn}, options) {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) return [];
+    if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
     if (!anidbEid) throw new Error("No anidbEid provided");
     const query = this._buildQuery({
       resolution: resolution,
@@ -32,7 +32,7 @@ export default new class Tosho {
     return data.length ? this.map(data, !1, options?.useTorrent) : [];
   }
   async batch({anidbAid: anidbAid, resolution: resolution, exclusions: exclusions, episode: episode, fetch: fetchFn}, options) {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) return [];
+    if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
     if (!anidbAid) throw new Error("No anidbAid provided");
     const query = this._buildQuery({
       resolution: resolution,
@@ -41,7 +41,7 @@ export default new class Tosho {
     return data.length ? this.map(data, !0, options?.useTorrent) : [];
   }
   async movie({anidbAid: anidbAid, resolution: resolution, exclusions: exclusions, fetch: fetchFn}, options) {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) return [];
+    if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
     if (!anidbAid) throw new Error("No anidbAid provided");
     const query = this._buildQuery({
       resolution: resolution,

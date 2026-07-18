@@ -18,14 +18,14 @@ export default new class Tosho {
     }));
   }
   async single({anidbEid: anidbEid, resolution: resolution, exclusions: exclusions, fetch: fetchFn}, options) {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) return [];
+    if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
     if (!anidbEid) throw new Error("No anidbEid provided");
     const res = await fetchFn(this.url + "episodes/" + anidbEid + "?limit=100"), data = await res.json(), excl = resolution ? exclusions.concat(...QUALITIES.filter(q => q !== resolution).map(q => `${q}p`)) : exclusions;
     return data?.data?.releases?.length ? this.map(data.data.releases, options?.useTorrent, excl.map(e => e.toLowerCase())) : [];
   }
   batch=async () => [];
   async movie({anidbAid: anidbAid, resolution: resolution, exclusions: exclusions, fetch: fetchFn}, options) {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) return [];
+    if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
     if (!anidbAid) throw new Error("No anidbAid provided");
     const res = await fetchFn(this.url + "series/anidb/" + anidbAid + "?limit=100"), data = await res.json(), excl = resolution ? exclusions.concat(...QUALITIES.filter(q => q !== resolution).map(q => `${q}p`)) : exclusions;
     return data?.data?.releases?.length ? this.map(data.data.releases, options?.useTorrent, excl.map(e => e.toLowerCase())) : [];

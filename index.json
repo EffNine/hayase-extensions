@@ -9,6 +9,7 @@
       "accuracy": "high",
       "ratio": 0,
       "media": "sub",
+      "description": "Anime release metadata indexer with torrent links",
       "languages": [
         "US"
       ],
@@ -26,6 +27,7 @@
       "accuracy": "high",
       "ratio": 0,
       "media": "sub",
+      "description": "Anime torrent indexer with broad coverage",
       "languages": [
         "US"
       ],
@@ -51,6 +53,7 @@
       "accuracy": "high",
       "ratio": 0,
       "media": "sub",
+      "description": "Usenet NZB search via AnimeTosho",
       "languages": [
         "US"
       ],
@@ -68,6 +71,7 @@
       "accuracy": "medium",
       "ratio": 0,
       "media": "sub",
+      "description": "Nyaa.si anime torrent search",
       "languages": [
         "US"
       ],
@@ -85,6 +89,7 @@
       "accuracy": "high",
       "ratio": 0,
       "media": "sub",
+      "description": "NekoBT anime torrent indexer",
       "updatePeers": false,
       "languages": [
         "US"
@@ -104,6 +109,7 @@
       "accuracy": "high",
       "ratio": 0,
       "media": "sub",
+      "description": "NekoBT with multi-language subtitle support",
       "languages": ["ALL"],
       "icon": "https://nekobt.to/cdn/pfp/null/64",
       "update": "https://raw.githubusercontent.com/EffNine/hayase-extensions/main/index.json",
@@ -129,6 +135,7 @@
       "accuracy": "high",
       "ratio": 0,
       "media": "sub",
+      "description": "Usenet NZB search via AmeNZB",
       "languages": ["US"],
       "url": "aHR0cHM6Ly9hbWVuemIubW9l",
       "icon": "https://amenzb.moe/static/posters/ame.png",

@@ -2,7 +2,7 @@ export default new class PirateBay {
   base = atob("aHR0cHM6Ly9hcGliYXkub3JnL3EucGhwP3E9")
 
   async single({ titles, episode, fetch: fetchFn }, options) {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) return []
+    if (typeof navigator !== 'undefined' && !navigator.isOnline) return []
     if (!titles?.length) return []
 
     const query = this.buildQuery(titles[0], episode)

@@ -1,7 +1,7 @@
 export default new class SeaDex {
   url=atob("aHR0cHM6Ly9yZWxlYXNlcy5tb2UvYXBpL2NvbGxlY3Rpb25zL2VudHJpZXMvcmVjb3Jkcw==");
   async single({anilistId: anilistId, titles: titles, episodeCount: episodeCount, fetch: fetchFn}, options) {
-    if (typeof navigator !== 'undefined' && !navigator.onLine) return [];
+    if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
     if (!anilistId) throw new Error("No anilistId provided");
     if (!titles?.length) throw new Error("No titles provided");
     const res = await fetchFn(`${this.url}?page=1&perPage=1&filter=alID%3D%22${anilistId}%22&skipTotal=1&expand=trs`), {items: items} = await res.json();
