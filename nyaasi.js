@@ -115,13 +115,4 @@ export default new class NyaaSi {
       });
   }
 
-  async test(options) {
-    try {
-      const fetchFn = options?.fetch || fetch;
-      const res = await fetchFn(this.url);
-      return res.ok;
-    } catch (error) {
-      throw new Error('Could not connect to Nyaa.si API');
-    }
-  }
 };

@@ -45,13 +45,4 @@ export default new class TorrentGalaxy {
   batch = this.single
   movie = this.single
 
-  async test(options) {
-    try {
-      const fetchFn = options?.fetch || fetch;
-      const res = await fetchFn(this.base)
-      return res.ok
-    } catch (e) {
-      return false
-    }
-  }
 }

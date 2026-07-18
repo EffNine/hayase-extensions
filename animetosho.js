@@ -49,13 +49,4 @@ export default new class Tosho {
     }), res = await fetchFn(this.url + "?aid=" + anidbAid + query), data = await res.json();
     return data.length ? this.map(data, !1, options?.useTorrent) : [];
   }
-  async test(options) {
-    try {
-      const fetchFn = options?.fetch || fetch;
-      if (!(await fetchFn(this.url)).ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
-      return true;
-    } catch (error) {
-      throw new Error(`Could not reach ${this.url}! Does the site work in your region?`);
-    }
-  }
 };

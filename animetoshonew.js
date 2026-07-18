@@ -30,13 +30,4 @@ export default new class Tosho {
     const res = await fetchFn(this.url + "series/anidb/" + anidbAid + "?limit=100"), data = await res.json(), excl = resolution ? exclusions.concat(...QUALITIES.filter(q => q !== resolution).map(q => `${q}p`)) : exclusions;
     return data?.data?.releases?.length ? this.map(data.data.releases, options?.useTorrent, excl.map(e => e.toLowerCase())) : [];
   }
-  async test(options) {
-    try {
-      const fetchFn = options?.fetch || fetch;
-      if (!(await fetchFn(this.url)).ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
-      return true;
-    } catch (error) {
-      throw new Error(`Could not reach ${this.url}! Does the site work in your region?`);
-    }
-  }
 };

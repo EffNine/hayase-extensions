@@ -41,14 +41,4 @@ export default new class NekoBT {
   }
   batch=() => [];
   movie=() => [];
-  async test(options) {
-    try {
-      const fetchFn = options?.fetch || fetch;
-      const {ok: ok} = await fetchFn(this.url + "announcements");
-      if (!ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
-      return true;
-    } catch (error) {
-      throw new Error(`Could not reach ${this.url}! Does the site work in your region?`);
-    }
-  }
 };
