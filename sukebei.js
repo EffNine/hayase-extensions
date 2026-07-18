@@ -1,45 +1,4 @@
 const sizeMap = { KiB: 1024, MiB: 1048576, GiB: 1024 ** 3, TiB: 1024 ** 4 };
-const url = atob("aHR0cHM6Ly9zdWtlYmVpLm55YWEuc2kv");
-
-async function single({media, episode, exclusions, episodeCount, absoluteEpisodeNumber, fetch: fetchFn}, _, isBatch = false) {
-  if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
-  if (!media.isAdult && !media.genres.includes("Hentai")) return [];
-  const titles = createTitle([...Object.values(media.title), ...media.synonyms]).join(")|(");
-  const prequel = findEdge(media, "PREQUEL")?.node;
-  const sequel = findEdge(media, "SEQUEL")?.node;
-  const absoluteep = absoluteEpisodeNumber ?? episode;
-  const episodes = [episode];
-  absoluteep !== episode && absoluteep > episodeCount && episodes.push(absoluteep);
-  let ep = "";
-  if (episodeCount > 1) {
-    if (isBatch) {
-      const digits = Math.max(2, episodeCount.toString().length);
-      ep = `"${zeropad(1, digits)}-${zeropad(episodeCount, digits)}"|"${zeropad(1, digits)}~${zeropad(episodeCount, digits)}"|"1-${episodeCount}"|"1~${episodeCount}"|"batch"|"complete"${prequel ? "" : '|"S01"'}`;
-    } else {
-      ep = `${episodes.map(epstring).join("|")}`;
-    }
-  }
-  let entries = parseRSSItems(await getRSSContent(`${url}?page=rss&c=1_1&s=seeders&o=desc&q=(${titles})${ep}${exclusions.length ? `-"${exclusions.join('"|"')}"` : ""}`, fetchFn));
-  const checkSequelDate = "FINISHED" === media.status && ("FINISHED" === sequel?.status || "RELEASING" === sequel?.status) && sequel.startDate;
-  const sequelStartDate = checkSequelDate && new Date(Object.values(checkSequelDate).join(" "));
-  const checkPrequelDate = ("FINISHED" === media.status || "RELEASING" === media.status) && "FINISHED" === prequel?.status && prequel?.endDate;
-  const prequelEndDate = checkPrequelDate && new Date(Object.values(checkPrequelDate).join(" "));
-  prequelEndDate && (entries = entries.filter(entry => entry.date > new Date(+prequelEndDate + 10699393840)));
-  sequelStartDate && "TV" === media.format && (entries = entries.filter(entry => entry.date < new Date(+sequelStartDate - 10699393840)));
-  return entries;
-}
-
-const batch = (args, opts) => single(args, opts, true);
-const movie = batch;
-
-async function test() {
-  try {
-    if (!(await fetch(`${url}?page=rss&c=1_1&s=seeders&o=desc&q=test`)).ok) throw new Error(`Failed to load data from ${url}! Is the site down?`);
-    return true;
-  } catch (error) {
-    throw new Error(`Could not reach ${url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
-  }
-}
 
 function zeropad(v = 1, l = 2) {
   return ("string" == typeof v ? v : v.toString()).padStart(l, "0");
@@ -105,5 +64,44 @@ async function getRSSContent(rssUrl, fetchFn) {
   }
 }
 
-export default { single, batch, movie, test };
-export { single, batch, movie, test };
+export default new class Sukebei {
+  url=atob("aHR0cHM6Ly9zdWtlYmVpLm55YWEuc2kv");
+  async single({media, episode, exclusions, episodeCount, absoluteEpisodeNumber, fetch: fetchFn}, _, isBatch = false) {
+    if (!navigator.onLine) return [];
+    if (!media.isAdult && !media.genres.includes("Hentai")) return [];
+    const titles = createTitle([...Object.values(media.title), ...media.synonyms]).join(")|(");
+    const prequel = findEdge(media, "PREQUEL")?.node;
+    const sequel = findEdge(media, "SEQUEL")?.node;
+    const absoluteep = absoluteEpisodeNumber ?? episode;
+    const episodes = [episode];
+    absoluteep !== episode && absoluteep > episodeCount && episodes.push(absoluteep);
+    let ep = "";
+    if (episodeCount > 1) {
+      if (isBatch) {
+        const digits = Math.max(2, episodeCount.toString().length);
+        ep = `"${zeropad(1, digits)}-${zeropad(episodeCount, digits)}"|"${zeropad(1, digits)}~${zeropad(episodeCount, digits)}"|"1-${episodeCount}"|"1~${episodeCount}"|"batch"|"complete"${prequel ? "" : '|"S01"'}`;
+      } else {
+        ep = `${episodes.map(epstring).join("|")}`;
+      }
+    }
+    let entries = parseRSSItems(await getRSSContent(`${this.url}?page=rss&c=1_1&s=seeders&o=desc&q=(${titles})${ep}${exclusions.length ? `-"${exclusions.join('"|"')}"` : ""}`, fetchFn));
+    const checkSequelDate = "FINISHED" === media.status && ("FINISHED" === sequel?.status || "RELEASING" === sequel?.status) && sequel.startDate;
+    const sequelStartDate = checkSequelDate && new Date(Object.values(checkSequelDate).join(" "));
+    const checkPrequelDate = ("FINISHED" === media.status || "RELEASING" === media.status) && "FINISHED" === prequel?.status && prequel?.endDate;
+    const prequelEndDate = checkPrequelDate && new Date(Object.values(checkPrequelDate).join(" "));
+    prequelEndDate && (entries = entries.filter(entry => entry.date > new Date(+prequelEndDate + 10699393840)));
+    sequelStartDate && "TV" === media.format && (entries = entries.filter(entry => entry.date < new Date(+sequelStartDate - 10699393840)));
+    return entries;
+  }
+  batch=(args, opts) => this.single(args, opts, true);
+  movie=this.batch;
+  async test() {
+    try {
+      const {ok} = await fetch(`${this.url}?page=rss&c=1_1&s=seeders&o=desc&q=test`);
+      if (!ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
+      return !0;
+    } catch (error) {
+      throw new Error(`Could not reach ${this.url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+    }
+  }
+};

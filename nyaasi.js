@@ -1,12 +1,15 @@
 const sizeMap = { KiB: 1024, MiB: 1048576, GiB: 1024 ** 3, TiB: 1024 ** 4 };
-const url = atob("aHR0cHM6Ly9ueWFhLnNpLw==");
 
-async function _fetchRSS(query, fetchFn) {
-  const rssUrl = `${url}?page=rss&c=1_0&f=0&q=${encodeURIComponent(query)}`;
-  const res = await fetchFn(rssUrl);
-  if (!res.ok) return [];
-  const text = await res.text();
-  return _parseRSS(text);
+function _extract(content, tag) {
+  const regex = new RegExp(`<${tag}><!\\[CDATA\\[(.+?)\\]\\]><\\/${tag}>|<${tag}>(.+?)<\\/${tag}>`, 'i');
+  const match = content.match(regex);
+  return match ? (match[1] || match[2] || '').trim() : '';
+}
+
+function _extractNS(content, tag) {
+  const regex = new RegExp(`<nyaa:${tag}>(.+?)<\\/nyaa:${tag}>`, 'i');
+  const match = content.match(regex);
+  return match ? match[1].trim() : '';
 }
 
 function _parseRSS(xml) {
@@ -37,34 +40,11 @@ function _parseRSS(xml) {
   return items;
 }
 
-function _extract(content, tag) {
-  const regex = new RegExp(`<${tag}><!\\[CDATA\\[(.+?)\\]\\]><\\/${tag}>|<${tag}>(.+?)<\\/${tag}>`, 'i');
-  const match = content.match(regex);
-  return match ? (match[1] || match[2] || '').trim() : '';
-}
-
-function _extractNS(content, tag) {
-  const regex = new RegExp(`<nyaa:${tag}>(.+?)<\\/nyaa:${tag}>`, 'i');
-  const match = content.match(regex);
-  return match ? match[1].trim() : '';
-}
-
 function buildQuery(title, episode) {
   let query = title.replace(/[^\w\s-]/g, ' ').trim();
   if (episode) query += ` ${episode.toString().padStart(2, '0')}`;
   return query;
 }
-
-async function single({ titles, episode, resolution, exclusions, fetch: fetchFn }) {
-  if (!titles?.length) return [];
-  const query = buildQuery(titles[0], episode);
-  const data = await _fetchRSS(query, fetchFn || fetch);
-  if (!Array.isArray(data)) return [];
-  return map(data, resolution, exclusions);
-}
-
-const batch = single;
-const movie = single;
 
 function map(items, resolution, exclusions) {
   const excl = (exclusions || []).map(e => e.toLowerCase());
@@ -92,15 +72,32 @@ function map(items, resolution, exclusions) {
     });
 }
 
-async function test() {
-  try {
-    const res = await fetch(`${url}?page=rss&c=1_0&f=0&q=test`);
-    if (!res.ok) throw new Error(`Failed to load data from ${url}! Is the site down?`);
-    return true;
-  } catch (error) {
-    throw new Error(`Could not reach ${url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+export default new class NyaaSi {
+  url=atob("aHR0cHM6Ly9ueWFhLnNpLw==");
+  async _fetchRSS(query, fetchFn) {
+    const rssUrl = `${this.url}?page=rss&c=1_0&f=0&q=${encodeURIComponent(query)}`;
+    const res = await fetchFn(rssUrl);
+    if (!res.ok) return [];
+    const text = await res.text();
+    return _parseRSS(text);
   }
-}
-
-export default { single, batch, movie, test };
-export { single, batch, movie, test };
+  async single({titles, episode, resolution, exclusions, fetch: fetchFn}) {
+    if (!navigator.onLine) return [];
+    if (!titles?.length) return [];
+    const query = buildQuery(titles[0], episode);
+    const data = await this._fetchRSS(query, fetchFn || fetch);
+    if (!Array.isArray(data)) return [];
+    return map(data, resolution, exclusions);
+  }
+  batch=this.single;
+  movie=this.single;
+  async test() {
+    try {
+      const {ok} = await fetch(`${this.url}?page=rss&c=1_0&f=0&q=test`);
+      if (!ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
+      return !0;
+    } catch (error) {
+      throw new Error(`Could not reach ${this.url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+    }
+  }
+};
