@@ -1,18 +1,3 @@
-const url = atob("aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZw==");
-const rssUrl = atob("aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZy9yc3M=");
-
-async function _fetch(fetchFn, search) {
-  const fetchUrl = `${rssUrl}?${search}`;
-  if (fetchFn) {
-    const res = await fetchFn(fetchUrl);
-    const text = await res.text();
-    return _parseRSS(text);
-  }
-  const res = await fetch(fetchUrl);
-  const text = await res.text();
-  return _parseRSS(text);
-}
-
 function _parseRSS(xml) {
   const items = [];
   const itemRegex = /<item[^>]*>([\s\S]*?)<\/item>/g;
@@ -53,33 +38,6 @@ function _parseTitle(title) {
   return { ep, resolution, animeTitle };
 }
 
-async function single(query, options) {
-  if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
-  if (!query.titles?.length) return [];
-  const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "";
-  const items = await _fetch(query.fetch, `r=${resParam}`);
-  if (!items?.length) return [];
-  return map(items, query.titles, query.episode, query.resolution);
-}
-
-async function batch(query, options) {
-  if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
-  if (!query.titles?.length) return [];
-  const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "";
-  const items = await _fetch(query.fetch, `r=${resParam}`);
-  if (!items?.length) return [];
-  return map(items, query.titles, query.episode, query.resolution, true);
-}
-
-async function movie(query, options) {
-  if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
-  if (!query.titles?.length) return [];
-  const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "";
-  const items = await _fetch(query.fetch, `r=${resParam}`);
-  if (!items?.length) return [];
-  return map(items, query.titles, null, query.resolution);
-}
-
 function map(items, titles, episode, resolution, isBatch = false) {
   const filtered = items.filter(item => {
     const parsed = _parseTitle(item.title);
@@ -103,15 +61,51 @@ function map(items, titles, episode, resolution, isBatch = false) {
   });
 }
 
-async function test() {
-  try {
-    const res = await fetch(`${rssUrl}?r=1080`);
-    if (!res.ok) throw new Error(`Failed to load data from ${rssUrl}! Is the site down?`);
-    return true;
-  } catch (error) {
-    throw new Error(`Could not reach ${url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+export default new class SubsPlease {
+  url=atob("aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZw==");
+  rssUrl=atob("aHR0cHM6Ly9zdWJzcGxlYXNlLm9yZy9yc3M=");
+  async _fetch(fetchFn, search) {
+    const fetchUrl = `${this.rssUrl}?${search}`;
+    if (fetchFn) {
+      const res = await fetchFn(fetchUrl);
+      const text = await res.text();
+      return _parseRSS(text);
+    }
+    const res = await fetch(fetchUrl);
+    const text = await res.text();
+    return _parseRSS(text);
   }
-}
-
-export default { single, batch, movie, test };
-export { single, batch, movie, test };
+  async single(query, options) {
+    if (!navigator.onLine) return [];
+    if (!query.titles?.length) return [];
+    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "";
+    const items = await this._fetch(query.fetch, `r=${resParam}`);
+    if (!items?.length) return [];
+    return map(items, query.titles, query.episode, query.resolution);
+  }
+  async batch(query, options) {
+    if (!navigator.onLine) return [];
+    if (!query.titles?.length) return [];
+    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "";
+    const items = await this._fetch(query.fetch, `r=${resParam}`);
+    if (!items?.length) return [];
+    return map(items, query.titles, query.episode, query.resolution, true);
+  }
+  async movie(query, options) {
+    if (!navigator.onLine) return [];
+    if (!query.titles?.length) return [];
+    const resParam = query.resolution === "1080" ? "1080" : query.resolution === "720" ? "720" : "";
+    const items = await this._fetch(query.fetch, `r=${resParam}`);
+    if (!items?.length) return [];
+    return map(items, query.titles, null, query.resolution);
+  }
+  async test() {
+    try {
+      const {ok} = await fetch(`${this.rssUrl}?r=1080`);
+      if (!ok) throw new Error(`Failed to load data from ${this.rssUrl}! Is the site down?`);
+      return !0;
+    } catch (error) {
+      throw new Error(`Could not reach ${this.url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+    }
+  }
+};

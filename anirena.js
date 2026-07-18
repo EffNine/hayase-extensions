@@ -1,10 +1,3 @@
-const base = atob("aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20vcnNz");
-
-async function _fetchWithCors(url, fetchFn) {
-  if (fetchFn) return fetchFn(url);
-  return fetch(url);
-}
-
 function _parseRSS(xml) {
   const items = [];
   const itemRegex = /<item[\s\S]*?<\/item>/g;
@@ -68,36 +61,6 @@ function _parseTitle(title) {
   return { ep, resolution, group, animeTitle };
 }
 
-async function _getRSS(fetchFn) {
-  const res = await _fetchWithCors(base, fetchFn);
-  const text = await res.text();
-  return _parseRSS(text);
-}
-
-async function single(query, options) {
-  if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
-  if (!query.titles?.length) return [];
-  const items = await _getRSS(query.fetch);
-  if (!items?.length) return [];
-  return map(items, query.titles, query.episode, query.resolution);
-}
-
-async function batch(query, options) {
-  if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
-  if (!query.titles?.length) return [];
-  const items = await _getRSS(query.fetch);
-  if (!items?.length) return [];
-  return map(items, query.titles, query.episode, query.resolution, true);
-}
-
-async function movie(query, options) {
-  if (typeof navigator !== 'undefined' && !navigator.isOnline) return [];
-  if (!query.titles?.length) return [];
-  const items = await _getRSS(query.fetch);
-  if (!items?.length) return [];
-  return map(items, query.titles, null, query.resolution);
-}
-
 function map(items, titles, episode, resolution, isBatch = false) {
   const titlePatterns = titles.map(t => t.replace(/[^\w\s-]/g, " ").trim().toLowerCase());
   return items
@@ -133,15 +96,45 @@ function map(items, titles, episode, resolution, isBatch = false) {
     });
 }
 
-async function test() {
-  try {
-    const res = await fetch(base);
-    if (!res.ok) throw new Error(`Failed to load data from ${base}! Is the site down?`);
-    return true;
-  } catch (error) {
-    throw new Error(`Could not reach ${base}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+export default new class AniRena {
+  base=atob("aHR0cHM6Ly93d3cuYW5pcmVuYS5jb20vcnNz");
+  async _fetchWithCors(url, fetchFn) {
+    if (fetchFn) return fetchFn(url);
+    return fetch(url);
   }
-}
-
-export default { single, batch, movie, test };
-export { single, batch, movie, test };
+  async _getRSS(fetchFn) {
+    const res = await this._fetchWithCors(this.base, fetchFn);
+    const text = await res.text();
+    return _parseRSS(text);
+  }
+  async single(query, options) {
+    if (!navigator.onLine) return [];
+    if (!query.titles?.length) return [];
+    const items = await this._getRSS(query.fetch);
+    if (!items?.length) return [];
+    return map(items, query.titles, query.episode, query.resolution);
+  }
+  async batch(query, options) {
+    if (!navigator.onLine) return [];
+    if (!query.titles?.length) return [];
+    const items = await this._getRSS(query.fetch);
+    if (!items?.length) return [];
+    return map(items, query.titles, query.episode, query.resolution, true);
+  }
+  async movie(query, options) {
+    if (!navigator.onLine) return [];
+    if (!query.titles?.length) return [];
+    const items = await this._getRSS(query.fetch);
+    if (!items?.length) return [];
+    return map(items, query.titles, null, query.resolution);
+  }
+  async test() {
+    try {
+      const {ok} = await fetch(this.base);
+      if (!ok) throw new Error(`Failed to load data from ${this.base}! Is the site down?`);
+      return !0;
+    } catch (error) {
+      throw new Error(`Could not reach ${this.base}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+    }
+  }
+};

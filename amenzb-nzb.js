@@ -1,5 +1,3 @@
-const url = atob("aHR0cHM6Ly9hbWVuemIubW9lL2FwaT8=");
-
 function _parseItems(string) {
   const itemRegex = /<item>([\s\S]*?)<\/item>/g, items = [];
   for (const itemMatch of string.matchAll(itemRegex)) {
@@ -21,38 +19,36 @@ function _findByName(string, name) {
   return (items.find(item => item.nzbname?.includes(name)) || items.find(item => item.title?.includes(name)) || items.find(item => item.nzbname?.includes(nameWithoutExt)) || items.find(item => item.title?.includes(nameWithoutExt)))?.link?.replaceAll("&amp;", "&");
 }
 
-async function batch({hash, name, files, fetch: fetchFn}, options) {
-  if ((typeof navigator !== 'undefined' && !navigator.isOnline) || !options?.ameapi) return;
-  const search = new URLSearchParams({ apikey: options.ameapi, t: "search", info_hash: hash });
-  const res = await fetchFn(url + search.toString());
-  if (!res.ok) return;
-  const enclosureMatch = (await res.text()).match(/<enclosure url="([^"]+)"[^>]*>/);
-  if (enclosureMatch) return enclosureMatch[1].replaceAll("&amp;", "&");
-  const stringSearch = new URLSearchParams({ apikey: options.ameapi, t: "search", q: name });
-  const stringRes = await fetchFn(url + stringSearch.toString());
-  return stringRes.ok ? _findByName(await stringRes.text(), name) : void 0;
-}
-
-async function single({hash, file, fetch: fetchFn}, options) {
-  if ((typeof navigator !== 'undefined' && !navigator.isOnline) || !options?.ameapi) return;
-  const search = new URLSearchParams({ apikey: options.ameapi, t: "search", info_hash: hash });
-  const res = await fetchFn(url + search.toString());
-  if (!res.ok) return;
-  if ((await res.text()).match(/<enclosure url="([^"]+)"[^>]*>/)) return;
-  const stringSearch = new URLSearchParams({ apikey: options.ameapi, t: "search", q: file });
-  const stringRes = await fetchFn(url + stringSearch.toString());
-  return stringRes.ok ? _findByName(await stringRes.text(), file) : void 0;
-}
-
-async function test() {
-  try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Failed to load data from ${url}! Is the site down?`);
-    return true;
-  } catch (error) {
-    throw new Error(`Could not reach ${url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+export default new class AmeNZB {
+  url=atob("aHR0cHM6Ly9hbWVuemIubW9lL2FwaT8=");
+  async batch({hash, name, files, fetch: fetchFn}, options) {
+    if (!navigator.onLine || !options?.ameapi) return;
+    const search = new URLSearchParams({ apikey: options.ameapi, t: "search", info_hash: hash });
+    const res = await fetchFn(this.url + search.toString());
+    if (!res.ok) return;
+    const enclosureMatch = (await res.text()).match(/<enclosure url="([^"]+)"[^>]*>/);
+    if (enclosureMatch) return enclosureMatch[1].replaceAll("&amp;", "&");
+    const stringSearch = new URLSearchParams({ apikey: options.ameapi, t: "search", q: name });
+    const stringRes = await fetchFn(this.url + stringSearch.toString());
+    return stringRes.ok ? _findByName(await stringRes.text(), name) : void 0;
   }
-}
-
-export default { single, batch, test };
-export { single, batch, test };
+  async single({hash, file, fetch: fetchFn}, options) {
+    if (!navigator.onLine || !options?.ameapi) return;
+    const search = new URLSearchParams({ apikey: options.ameapi, t: "search", info_hash: hash });
+    const res = await fetchFn(this.url + search.toString());
+    if (!res.ok) return;
+    if ((await res.text()).match(/<enclosure url="([^"]+)"[^>]*>/)) return;
+    const stringSearch = new URLSearchParams({ apikey: options.ameapi, t: "search", q: file });
+    const stringRes = await fetchFn(this.url + stringSearch.toString());
+    return stringRes.ok ? _findByName(await stringRes.text(), file) : void 0;
+  }
+  async test() {
+    try {
+      const {ok} = await fetch(this.url);
+      if (!ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
+      return !0;
+    } catch (error) {
+      throw new Error(`Could not reach ${this.url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+    }
+  }
+};
