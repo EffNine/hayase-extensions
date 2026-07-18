@@ -95,9 +95,10 @@ function map(items, resolution, exclusions) {
 async function test() {
   try {
     const res = await fetch(`${url}?page=rss&c=1_0&f=0&q=test`);
-    return res.ok;
+    if (!res.ok) throw new Error(`Failed to load data from ${url}! Is the site down?`);
+    return true;
   } catch (error) {
-    throw new Error('Could not connect to Nyaa.si API');
+    throw new Error(`Could not reach ${url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
   }
 }
 
