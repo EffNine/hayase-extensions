@@ -22,4 +22,13 @@ export default new class SeaDex {
   }
   batch=() => [];
   movie=() => [];
+  async test() {
+    try {
+      const res = await fetch(this.url);
+      if (!res.ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
+      return true;
+    } catch (error) {
+      throw new Error(`Could not reach ${this.url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+    }
+  }
 };

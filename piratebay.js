@@ -76,4 +76,13 @@ export default new class PirateBay {
     return await this._fetchWithRetry(url, fetchFn);
   }
 
+  async test() {
+    try {
+      const url = this.base + 'test';
+      const res = await fetch(url);
+      return res.ok;
+    } catch (error) {
+      throw new Error('Could not connect to The Pirate Bay API');
+    }
+  }
 }

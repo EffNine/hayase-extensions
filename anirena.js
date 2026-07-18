@@ -129,6 +129,16 @@ export default new class AniRena {
     return this.map(items, query.titles, null, query.resolution);
   }
 
+  async test() {
+    try {
+      const res = await fetch(this.base);
+      if (!res.ok) throw new Error(`Failed to load data from ${this.base}! Is the site down?`);
+      return true;
+    } catch (error) {
+      throw new Error(`Could not reach ${this.base}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+    }
+  }
+
   map(items, titles, episode, resolution, isBatch = false) {
     const titlePatterns = titles.map(t => t.replace(/[^\w\s-]/g, " ").trim().toLowerCase());
 

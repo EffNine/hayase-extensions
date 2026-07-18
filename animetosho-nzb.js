@@ -9,4 +9,12 @@ export default new class ToshoNZB {
   async single() {
     return undefined;
   }
+  async test() {
+    try {
+      if (!(await fetch(this.url)).ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
+      return true;
+    } catch (error) {
+      throw new Error(`Could not reach ${this.url}! Does the site work in your region?`);
+    }
+  }
 };

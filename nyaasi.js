@@ -82,6 +82,15 @@ export default new class NyaaSi {
   batch = this.single;
   movie = this.single;
 
+  async test() {
+    try {
+      const res = await fetch(this.url);
+      return res.ok;
+    } catch (error) {
+      throw new Error('Could not connect to Nyaa.si API');
+    }
+  }
+
   map(items, resolution, exclusions) {
     const excl = (exclusions || []).map(e => e.toLowerCase());
     const resFilter = resolution ? resolution.replace('p', '') : null;

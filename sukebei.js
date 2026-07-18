@@ -25,6 +25,14 @@ export default new class {
   }
   batch=(args, opts) => this.single(args, opts, !0);
   movie=this.batch;
+  async test() {
+    try {
+      if (!(await fetch(this.url)).ok) throw new Error(`Failed to load data from ${this.url}! Is the site down?`);
+      return true;
+    } catch (error) {
+      throw new Error(`Could not reach ${this.url}! Does the site work in your region?`);
+    }
+  }
 };
 
 function zeropad(v = 1, l = 2) {

@@ -100,6 +100,16 @@ export default new class SubsPlease {
     return this.map(items, query.titles, null, query.resolution);
   }
 
+  async test() {
+    try {
+      const res = await fetch(`${this.rssUrl}?r=1080`);
+      if (!res.ok) throw new Error(`Failed to load data from ${this.rssUrl}! Is the site down?`);
+      return true;
+    } catch (error) {
+      throw new Error(`Could not reach ${this.url}! Does the site work in your region? Try enabling DoH or using a VPN.`);
+    }
+  }
+
   map(items, titles, episode, resolution, isBatch = false) {
     const filtered = items.filter(item => {
       const parsed = this._parseTitle(item.title);
